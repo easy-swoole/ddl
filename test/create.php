@@ -17,7 +17,7 @@ use EasySwoole\DDL\Enum\Engine;
 
 $sql = DDLBuilder::table('user', function (Table $table) {
 
-    $table->setTableComment('用户表')//设置表名称/
+    $table->setIfNotExists()->setTableComment('用户表')//设置表名称/
     ->setTableEngine(Engine::MYISAM)//设置表引擎
     ->setTableCharset(Character::UTF8MB4_GENERAL_CI);//设置表字符集
     $table->colInt('user_id', 10)->setColumnComment('用户ID')->setIsAutoIncrement()->setIsPrimaryKey();
