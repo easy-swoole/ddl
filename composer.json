@@ -18,7 +18,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "EasySwoole\\DDL\\": "src/"
+            "EasySwoole\\DDL\\": "src/",
+            "EasySwoole\\DDL\\Test\\":"test/"
         }
     },
     "require": {
