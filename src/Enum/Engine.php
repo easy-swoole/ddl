@@ -1,10 +1,15 @@
 <?php
 
-
 namespace EasySwoole\DDL\Enum;
 
+use EasySwoole\Spl\SplEnum;
 
-class Engine
+/**
+ * 储存引擎类型枚举
+ * Class Engine
+ * @package EasySwoole\DDL\Enum
+ */
+class Engine extends SplEnum
 {
     const CSV = 'csv';
     const INNODB = 'innodb';

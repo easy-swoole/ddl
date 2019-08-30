@@ -1,11 +1,14 @@
 <?php
 
-
 namespace EasySwoole\DDL\Enum;
-
 
 use EasySwoole\Spl\SplEnum;
 
+/**
+ * 字符集类型枚举
+ * Class Character
+ * @package EasySwoole\DDL\Enum
+ */
 class Character extends SplEnum
 {
     const ARMSCII8_BIN = 'armscii8_bin';
