@@ -523,13 +523,13 @@ class Table
                 $this->comment ? "COMMENT = '" . addslashes($this->comment) . "'" : null
             ]
         );
-
+        $ifNotExists = $this->ifNotExists ? 'IF NOT EXISTS ' : '';
         // 构建表格DDL
         $createDDL = implode(
                 "\n",
                 array_filter(
                     [
-                        "CREATE TABLE {$tableName} (",
+                        "CREATE TABLE {$ifNotExists}{$tableName} (",
                         implode(",\n",
                             array_merge(
                                 $columnDefinitions,
