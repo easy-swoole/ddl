@@ -49,7 +49,7 @@ class Table
      */
     function colInt(string $name, int $limit = null): Column
     {
-        $this->columns[$name] = new Column($name, DataType::INT);
+        $this->columns[$name] = $this->createColumn($name, DataType::INT);
         $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
@@ -62,7 +62,7 @@ class Table
      */
     function colBigInt(string $name, int $limit = null): Column
     {
-        $this->columns[$name] = new Column($name, DataType::BIGINT);
+        $this->columns[$name] = $this->createColumn($name, DataType::BIGINT);
         $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
@@ -75,7 +75,7 @@ class Table
      */
     function colTinyInt(string $name, int $limit = null): Column
     {
-        $this->columns[$name] = new Column($name, DataType::TINYINT);
+        $this->columns[$name] = $this->createColumn($name, DataType::TINYINT);
         $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
@@ -88,7 +88,7 @@ class Table
      */
     function colSmallInt(string $name, int $limit = null): Column
     {
-        $this->columns[$name] = new Column($name, DataType::SMALLINT);
+        $this->columns[$name] = $this->createColumn($name, DataType::SMALLINT);
         $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
@@ -101,7 +101,7 @@ class Table
      */
     function colMediumInt(string $name, int $limit = null): Column
     {
-        $this->columns[$name] = new Column($name, DataType::MEDIUMINT);
+        $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMINT);
         $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
@@ -119,7 +119,7 @@ class Table
         if (is_numeric($precision) && is_numeric($digits) && ($digits > $precision)) {
             throw new \InvalidArgumentException('col ' . $name . ' type float(M,D), M must be >= D');
         }
-        $this->columns[$name] = new Column($name, DataType::FLOAT);
+        $this->columns[$name] = $this->createColumn($name, DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
             $this->columns[$name]->setColumnLimit([$precision, $digits]);
         } elseif (is_numeric($precision)) {
@@ -140,7 +140,7 @@ class Table
         if (is_numeric($precision) && is_numeric($digits) && ($digits > $precision)) {
             throw new \InvalidArgumentException('col ' . $name . ' type double(M,D), M must be >= D');
         }
-        $this->columns[$name] = new Column($name, DataType::DOUBLE);
+        $this->columns[$name] = $this->createColumn($name, DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
             $this->columns[$name]->setColumnLimit([$precision, $digits]);
         } elseif (is_numeric($precision)) {
@@ -163,7 +163,7 @@ class Table
         if ($digits > $precision) {
             throw new \InvalidArgumentException('col ' . $name . ' type decimal(M,D), M must be >= D');
         }
-        $this->columns[$name] = new Column($name, DataType::DECIMAL);
+        $this->columns[$name] = $this->createColumn($name, DataType::DECIMAL);
         $this->columns[$name]->setColumnLimit([$precision, $digits]);
         return $this->columns[$name];
     }
@@ -175,7 +175,7 @@ class Table
      */
     function colDate(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::DATE);
+        $this->columns[$name] = $this->createColumn($name, DataType::DATE);
         return $this->columns[$name];
     }
 
@@ -186,7 +186,7 @@ class Table
      */
     function colYear(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::YEAR);
+        $this->columns[$name] = $this->createColumn($name, DataType::YEAR);
         return $this->columns[$name];
     }
 
@@ -201,7 +201,7 @@ class Table
         if ($fsp < 0 || $fsp > 6) {
             throw new \InvalidArgumentException('col ' . $name . ' type time(fsp), fsp must be range 0 to 6');
         }
-        $this->columns[$name] = new Column($name, DataType::TIME);
+        $this->columns[$name] = $this->createColumn($name, DataType::TIME);
         if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
         return $this->columns[$name];
     }
@@ -217,7 +217,7 @@ class Table
         if ($fsp < 0 || $fsp > 6) {
             throw new \InvalidArgumentException('col ' . $name . ' type datetime(fsp), fsp must be range 0 to 6');
         }
-        $this->columns[$name] = new Column($name, DataType::DATETIME);
+        $this->columns[$name] = $this->createColumn($name, DataType::DATETIME);
         if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
         return $this->columns[$name];
     }
@@ -233,7 +233,7 @@ class Table
         if ($fsp < 0 || $fsp > 6) {
             throw new \InvalidArgumentException('col ' . $name . ' type timestamp(fsp), fsp must be range 0 to 6');
         }
-        $this->columns[$name] = new Column($name, DataType::TIMESTAMP);
+        $this->columns[$name] = $this->createColumn($name, DataType::TIMESTAMP);
         if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
         return $this->columns[$name];
     }
@@ -246,7 +246,7 @@ class Table
      */
     function colChar(string $name, ?int $limit = null): Column
     {
-        $this->columns[$name] = new Column($name, DataType::CHAR);
+        $this->columns[$name] = $this->createColumn($name, DataType::CHAR);
         $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
@@ -259,7 +259,7 @@ class Table
      */
     function colVarChar(string $name, ?int $limit = null): Column
     {
-        $this->columns[$name] = new Column($name, DataType::VARCHAR);
+        $this->columns[$name] = $this->createColumn($name, DataType::VARCHAR);
         $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
@@ -271,7 +271,7 @@ class Table
      */
     function colText(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::TEXT);
+        $this->columns[$name] = $this->createColumn($name, DataType::TEXT);
         return $this->columns[$name];
     }
 
@@ -282,7 +282,7 @@ class Table
      */
     function colTinyText(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::TINYTEXT);
+        $this->columns[$name] = $this->createColumn($name, DataType::TINYTEXT);
         return $this->columns[$name];
     }
 
@@ -293,7 +293,7 @@ class Table
      */
     function colLongText(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::LONGTEXT);
+        $this->columns[$name] = $this->createColumn($name, DataType::LONGTEXT);
         return $this->columns[$name];
     }
 
@@ -304,7 +304,7 @@ class Table
      */
     function colMediumText(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::MEDIUMTEXT);
+        $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMTEXT);
         return $this->columns[$name];
     }
 
@@ -315,7 +315,7 @@ class Table
      */
     function colBlob(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::BLOB);
+        $this->columns[$name] = $this->createColumn($name, DataType::BLOB);
         return $this->columns[$name];
     }
 
@@ -326,7 +326,7 @@ class Table
      */
     function colLongBlob(string $name): Column
     {
-        $this->columns[$name] = new Column($name, DataType::LONGBLOB);
+        $this->columns[$name] = $this->createColumn($name, DataType::LONGBLOB);
         return $this->columns[$name];
     }
 
@@ -337,7 +337,7 @@ class Table
      */
     function colTinyBlob(string $name)
     {
-        $this->columns[$name] = new Column($name, DataType::TINYBLOB);
+        $this->columns[$name] = $this->createColumn($name, DataType::TINYBLOB);
         return $this->columns[$name];
     }
 
@@ -348,7 +348,7 @@ class Table
      */
     function colMediumBlob(string $name)
     {
-        $this->columns[$name] = new Column($name, DataType::MEDIUMBLOB);
+        $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMBLOB);
         return $this->columns[$name];
     }
 
@@ -363,7 +363,7 @@ class Table
      */
     function indexNormal(string $name, $columns): Index
     {
-        $this->indexes[$name] = new Index($name, IndexType::NORMAL, $columns);
+        $this->indexes[$name] = $this->createIndex($name, IndexType::NORMAL, $columns);
         return $this->indexes[$name];
     }
 
@@ -376,7 +376,7 @@ class Table
      */
     function indexUnique(string $name, $columns): Index
     {
-        $this->indexes[$name] = new Index($name, IndexType::UNIQUE, $columns);
+        $this->indexes[$name] = $this->createIndex($name, IndexType::UNIQUE, $columns);
         return $this->indexes[$name];
     }
 
@@ -389,7 +389,7 @@ class Table
      */
     function indexPrimary(string $name, $columns): Index
     {
-        $this->indexes[$name] = new Index($name, IndexType::PRIMARY, $columns);
+        $this->indexes[$name] = $this->createIndex($name, IndexType::PRIMARY, $columns);
         return $this->indexes[$name];
     }
 
@@ -402,7 +402,7 @@ class Table
      */
     function indexFullText(string $name, $columns): Index
     {
-        $this->indexes[$name] = new Index($name, IndexType::FULLTEXT, $columns);
+        $this->indexes[$name] = $this->createIndex($name, IndexType::FULLTEXT, $columns);
         return $this->indexes[$name];
     }
 
@@ -543,6 +543,31 @@ class Table
             ) . ';';
 
         return $createDDL;
+    }
+
+    /**
+     * 创建一个列对象
+     * 继承可以改变返回的类对象以使用自定义对象
+     * @param string $columnName
+     * @param string $columnType
+     * @return Column
+     */
+    protected function createColumn(string $columnName, string $columnType)
+    {
+        return new Column($columnName, $columnType);
+    }
+
+    /**
+     * 创建一个索引对象
+     * 继承可以改变返回的类对象以使用自定义对象
+     * @param string|null $indexName
+     * @param $indexType
+     * @param $indexColumns
+     * @return Index
+     */
+    protected function createIndex(?string $indexName, $indexType, $indexColumns)
+    {
+        return new Index($indexName, $indexType, $indexColumns);
     }
 
     /**

@@ -214,15 +214,18 @@ class Column
             return false;
         }
         // 如果当前允许NULL值 而没有设置默认值 那么默认就为NULL
-        if (!$this->isNotNull && ($this->defaultValue = null || $this->defaultValue = 'NULL')) {
+        if (!$this->isNotNull && ($this->defaultValue == null || $this->defaultValue == 'NULL')) {
             return 'NULL';
         }
-        // 否则字段是不允许NULL值的 设置有值应该加引号
+
+        // 否则字段是不允许NULL值的 如果默认值是文本应该加入引号
         if (is_string($this->defaultValue)) {
             return "'" . $this->defaultValue . "'";
+        } else if (is_bool($this->defaultValue)) {  // 布尔类型强转0和1
+            return $this->defaultValue ? '1' : '0';
+        } else {  // 其他类型强转String
+            return (string)$this->defaultValue;
         }
-        // 否则没有设置默认值 不需要给默认值
-        return false;
     }
 
     /**
@@ -277,7 +280,7 @@ class Column
                     $this->zeroFill ? 'ZEROFILL' : null,
                     $this->isUnique ? 'UNIQUE' : null,
                     $this->isNotNull ? 'NOT NULL' : 'NULL',
-                    $default ? 'DEFAULT ' . $default : null,
+                    $default !== false ? 'DEFAULT ' . $default : null,
                     $this->isPrimaryKey ? 'PRIMARY KEY' : null,
                     $this->autoIncrement ? 'AUTO_INCREMENT' : null,
                     $this->columnComment ? sprintf("COMMENT '%s'", addslashes($this->columnComment)) : null
