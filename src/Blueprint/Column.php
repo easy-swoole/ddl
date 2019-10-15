@@ -223,6 +223,8 @@ class Column
             return "'" . $this->defaultValue . "'";
         } else if (is_bool($this->defaultValue)) {  // 布尔类型强转0和1
             return $this->defaultValue ? '1' : '0';
+        } else if (is_null($this->defaultValue)) {
+            return false;
         } else {  // 其他类型强转String
             return (string)$this->defaultValue;
         }
