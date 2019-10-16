@@ -28,7 +28,7 @@ class Table
     // 额外选项
     protected $isTemporary = false;  // 是否临时表
     protected $ifNotExists = false;  // 是否不存在才创建
-    protected $autoIncrement;        // 默认自增从该值开始
+    protected $autoIncrement;         // 默认自增从该值开始
 
     /**
      * Table constructor.
@@ -116,9 +116,6 @@ class Table
      */
     function colFloat(string $name, int $precision = null, int $digits = null): Column
     {
-        if (is_numeric($precision) && is_numeric($digits) && ($digits > $precision)) {
-            throw new \InvalidArgumentException('col ' . $name . ' type float(M,D), M must be >= D');
-        }
         $this->columns[$name] = $this->createColumn($name, DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
             $this->columns[$name]->setColumnLimit([$precision, $digits]);
@@ -137,9 +134,6 @@ class Table
      */
     function colDouble(string $name, int $precision = null, int $digits = null): Column
     {
-        if (is_numeric($precision) && is_numeric($digits) && ($digits > $precision)) {
-            throw new \InvalidArgumentException('col ' . $name . ' type double(M,D), M must be >= D');
-        }
         $this->columns[$name] = $this->createColumn($name, DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
             $this->columns[$name]->setColumnLimit([$precision, $digits]);
@@ -160,9 +154,6 @@ class Table
      */
     function colDecimal(string $name, int $precision = 10, int $digits = 0): Column
     {
-        if ($digits > $precision) {
-            throw new \InvalidArgumentException('col ' . $name . ' type decimal(M,D), M must be >= D');
-        }
         $this->columns[$name] = $this->createColumn($name, DataType::DECIMAL);
         $this->columns[$name]->setColumnLimit([$precision, $digits]);
         return $this->columns[$name];
@@ -198,9 +189,6 @@ class Table
      */
     function colTime(string $name, ?int $fsp = null): Column
     {
-        if ($fsp < 0 || $fsp > 6) {
-            throw new \InvalidArgumentException('col ' . $name . ' type time(fsp), fsp must be range 0 to 6');
-        }
         $this->columns[$name] = $this->createColumn($name, DataType::TIME);
         if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
         return $this->columns[$name];
@@ -214,9 +202,6 @@ class Table
      */
     function colDateTime(string $name, ?int $fsp = null): Column
     {
-        if ($fsp < 0 || $fsp > 6) {
-            throw new \InvalidArgumentException('col ' . $name . ' type datetime(fsp), fsp must be range 0 to 6');
-        }
         $this->columns[$name] = $this->createColumn($name, DataType::DATETIME);
         if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
         return $this->columns[$name];
@@ -230,9 +215,6 @@ class Table
      */
     function colTimestamp(string $name, ?int $fsp = null): Column
     {
-        if ($fsp < 0 || $fsp > 6) {
-            throw new \InvalidArgumentException('col ' . $name . ' type timestamp(fsp), fsp must be range 0 to 6');
-        }
         $this->columns[$name] = $this->createColumn($name, DataType::TIMESTAMP);
         if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
         return $this->columns[$name];

@@ -3,6 +3,8 @@
 namespace EasySwoole\DDL\Blueprint;
 
 use EasySwoole\DDL\Enum\DataType;
+use EasySwoole\DDL\Filter;
+use EasySwoole\DDL\TypeLimit;
 use InvalidArgumentException;
 
 /**
@@ -262,6 +264,7 @@ class Column
         return $columnType;
     }
 
+
     /**
      * 创建DDL
      * 带下划线的方法请不要外部调用
@@ -269,6 +272,9 @@ class Column
      */
     function __createDDL(): string
     {
+        Filter::checkTypeLimit($this);//检测limit是否合法
+        Filter::checkUnsigned($this); //检测无符号类型
+        Filter::checkZerofill($this); //检测是否补充长度
         $default = $this->parseDefaultValue();
         $columnCharset = $this->columnCharset ? explode('_', $this->columnCharset)[0] : false;
         return implode(' ',
@@ -298,5 +304,109 @@ class Column
     function __toString()
     {
         return $this->__createDDL();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumnName()
+    {
+        return $this->columnName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumnType()
+    {
+        return $this->columnType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumnLimit()
+    {
+        return $this->columnLimit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumnComment()
+    {
+        return $this->columnComment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumnCharset()
+    {
+        return $this->columnCharset;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsBinary()
+    {
+        return $this->isBinary;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsUnique()
+    {
+        return $this->isUnique;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUnsigned()
+    {
+        return $this->unsigned;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZeroFill()
+    {
+        return $this->zeroFill;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsNotNull(): bool
+    {
+        return $this->isNotNull;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAutoIncrement()
+    {
+        return $this->autoIncrement;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPrimaryKey()
+    {
+        return $this->isPrimaryKey;
     }
 }
