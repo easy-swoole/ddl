@@ -18,7 +18,7 @@ class DataType extends SplEnum
     const SMALLINT = 'smallint';
     const MEDIUMINT = 'mediumint';
 
-    // 小数
+    // 小数 前面的要大于后面的
     const FLOAT = 'float';
     const DOUBLE = 'double';
     const DECIMAL = 'decimal';
