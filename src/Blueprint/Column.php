@@ -3,8 +3,9 @@
 namespace EasySwoole\DDL\Blueprint;
 
 use EasySwoole\DDL\Enum\DataType;
-use EasySwoole\DDL\Filter;
-use EasySwoole\DDL\TypeLimit;
+use EasySwoole\DDL\Filter\FilterLimit;
+use EasySwoole\DDL\Filter\FilterUnsigned;
+use EasySwoole\DDL\Filter\FilterZerofill;
 use InvalidArgumentException;
 
 /**
@@ -272,9 +273,9 @@ class Column
      */
     function __createDDL(): string
     {
-        Filter::checkTypeLimit($this);//检测limit是否合法
-        Filter::checkUnsigned($this); //检测无符号类型
-        Filter::checkZerofill($this); //检测是否补充长度
+        FilterLimit::run($this);//检测limit是否合法
+        FilterUnsigned::run($this); //检测无符号类型
+        FilterZerofill::run($this); //检测是否补充长度
         $default = $this->parseDefaultValue();
         $columnCharset = $this->columnCharset ? explode('_', $this->columnCharset)[0] : false;
         return implode(' ',

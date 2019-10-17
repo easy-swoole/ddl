@@ -13,9 +13,5 @@ use EasySwoole\DDL\Blueprint\Column;
 
 interface FilterInterface
 {
-    public static function limit(Column $column);
-
-    public static function unsigned(Column $column);
-
-    public static function zerofill(Column $column);
+    public static function run(Column $column);
 }
