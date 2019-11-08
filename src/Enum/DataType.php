@@ -13,6 +13,7 @@ class DataType extends SplEnum
 {
     // 整型
     const INT = 'int';
+    const INTEGER = 'integer';
     const BIGINT = 'bigint';
     const TINYINT = 'tinyint';
     const SMALLINT = 'smallint';
@@ -44,6 +45,38 @@ class DataType extends SplEnum
     const MEDIUMBLOB = 'mediumblob';
     const LONGBLOB = 'longblob';
 
+    const BINARY = 'binary';
+
+    const VARBINARY = 'varbinary';
+
+    const JSON = 'json';
+
+    const BIT = 'bit';
+
+    const ENUM = 'enum';
+
+    const GEOMETRY = 'geometry';
+
+    const GEOMETRYCOLLECTION = 'geometrycollection';
+
+    const LINESTRING = 'linestring';
+
+    const MULTILINESTRING = 'multilinestring';
+
+    const MULTIPOINT = 'multipoint';
+
+    const MULTIPOLYGON = 'multipolygon';
+
+    const NUMERIC = 'numeric';
+
+    const POINT = 'point';
+
+    const POLYGON = 'polygon';
+
+    const REAL = 'real';
+
+    const SET = 'set';
+
     /**
      * 是否数字类型
      * @param string $type
@@ -54,6 +87,7 @@ class DataType extends SplEnum
         // 全部数字类型
         $numericTypes = [
             DataType::INT,
+            DataType::INTEGER,
             DataType::BIGINT,
             DataType::TINYINT,
             DataType::SMALLINT,
