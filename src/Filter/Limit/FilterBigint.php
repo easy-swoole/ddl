@@ -6,7 +6,7 @@
  * Time: 14:44
  */
 
-namespace EasySwoole\DDL\Filter;
+namespace EasySwoole\DDL\Filter\Limit;
 
 
 use EasySwoole\DDL\Blueprint\Column;
