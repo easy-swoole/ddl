@@ -73,7 +73,7 @@ class Index
      * @param string $comment
      * @return Index
      */
-    function setIndexComment(string $comment): Index
+    function comment(string $comment): Index
     {
         $this->indexComment = $comment;
         return $this;

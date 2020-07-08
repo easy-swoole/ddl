@@ -51,7 +51,7 @@ class Table
     function int(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::INT);
-        $this->columns[$name]->setColumnLimit($limit);
+        $this->columns[$name]->limit($limit);
         return $this->columns[$name];
     }
 
@@ -64,7 +64,7 @@ class Table
     function bigint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::BIGINT);
-        $this->columns[$name]->setColumnLimit($limit);
+        $this->columns[$name]->limit($limit);
         return $this->columns[$name];
     }
 
@@ -77,7 +77,7 @@ class Table
     function tinyint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TINYINT);
-        $this->columns[$name]->setColumnLimit($limit);
+        $this->columns[$name]->limit($limit);
         return $this->columns[$name];
     }
 
@@ -90,7 +90,7 @@ class Table
     function smallint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::SMALLINT);
-        $this->columns[$name]->setColumnLimit($limit);
+        $this->columns[$name]->limit($limit);
         return $this->columns[$name];
     }
 
@@ -103,7 +103,7 @@ class Table
     function mediumInt(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMINT);
-        $this->columns[$name]->setColumnLimit($limit);
+        $this->columns[$name]->limit($limit);
         return $this->columns[$name];
     }
 
@@ -119,9 +119,9 @@ class Table
     {
         $this->columns[$name] = $this->createColumn($name, DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
-            $this->columns[$name]->setColumnLimit([$precision, $digits]);
+            $this->columns[$name]->limit([$precision, $digits]);
         } elseif (is_numeric($precision)) {
-            $this->columns[$name]->setColumnLimit($precision);
+            $this->columns[$name]->limit($precision);
         }
         return $this->columns[$name];
     }
@@ -137,9 +137,9 @@ class Table
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
-            $this->columns[$name]->setColumnLimit([$precision, $digits]);
+            $this->columns[$name]->limit([$precision, $digits]);
         } elseif (is_numeric($precision)) {
-            $this->columns[$name]->setColumnLimit($precision);
+            $this->columns[$name]->limit($precision);
         }
         return $this->columns[$name];
     }
@@ -156,7 +156,7 @@ class Table
     function decimal(string $name, int $precision = 10, int $digits = 0): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DECIMAL);
-        $this->columns[$name]->setColumnLimit([$precision, $digits]);
+        $this->columns[$name]->limit([$precision, $digits]);
         return $this->columns[$name];
     }
 
@@ -191,7 +191,9 @@ class Table
     function time(string $name, ?int $fsp = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TIME);
-        if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
+        if (is_numeric($fsp)) {
+            $this->columns[$name]->limit($fsp);
+        }
         return $this->columns[$name];
     }
 
@@ -204,7 +206,9 @@ class Table
     function datetime(string $name, ?int $fsp = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DATETIME);
-        if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
+        if (is_numeric($fsp)) {
+            $this->columns[$name]->limit($fsp);
+        }
         return $this->columns[$name];
     }
 
@@ -217,7 +221,9 @@ class Table
     function timestamp(string $name, ?int $fsp = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TIMESTAMP);
-        if (is_numeric($fsp)) $this->columns[$name]->setColumnLimit($fsp);
+        if (is_numeric($fsp)) {
+            $this->columns[$name]->limit($fsp);
+        }
         return $this->columns[$name];
     }
 
@@ -230,7 +236,7 @@ class Table
     function char(string $name, ?int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::CHAR);
-        $this->columns[$name]->setColumnLimit($limit);
+        $this->columns[$name]->limit($limit);
         return $this->columns[$name];
     }
 
@@ -243,7 +249,7 @@ class Table
     function varchar(string $name, ?int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::VARCHAR);
-        $this->columns[$name]->setColumnLimit($limit);
+        $this->columns[$name]->limit($limit);
         return $this->columns[$name];
     }
 

@@ -46,7 +46,7 @@ class Foreign
      * @param string|null $foreignName
      * @return Foreign
      */
-    function setForeignName(?string $foreignName = null): Foreign
+    private function setForeignName(?string $foreignName = null): Foreign
     {
         $this->foreignName = is_string($foreignName) ? trim($foreignName) : null;
         return $this;
@@ -57,7 +57,7 @@ class Foreign
      * @param string $localColumn
      * @return Foreign
      */
-    function setLocalColumn(string $localColumn): Foreign
+    private function setLocalColumn(string $localColumn): Foreign
     {
         $localColumn = trim($localColumn);
         if (empty($localColumn)) {
@@ -72,7 +72,7 @@ class Foreign
      * @param string $relatedTableName
      * @return Foreign
      */
-    function setRelatedTableName(string $relatedTableName): Foreign
+    private function setRelatedTableName(string $relatedTableName): Foreign
     {
         $relatedTableName = trim($relatedTableName);
         if (empty($relatedTableName)) {
@@ -87,7 +87,7 @@ class Foreign
      * @param string $foreignColumn
      * @return Foreign
      */
-    function setForeignColumn(string $foreignColumn): Foreign
+    private function setForeignColumn(string $foreignColumn): Foreign
     {
         $foreignColumn = trim($foreignColumn);
         if (empty($foreignColumn)) {
