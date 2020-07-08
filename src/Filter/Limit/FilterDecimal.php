@@ -9,12 +9,12 @@
 namespace EasySwoole\DDL\Filter\Limit;
 
 
-use EasySwoole\DDL\Blueprint\Column;
+use EasySwoole\DDL\Blueprint\ColumnInterface;
 use EasySwoole\DDL\Contracts\FilterInterface;
 
 class FilterDecimal implements FilterInterface
 {
-    public static function run(Column $column)
+    public static function run(ColumnInterface $column)
     {
         if (!is_array($column->getColumnLimit())) {
             throw new \InvalidArgumentException('col ' . $column->getColumnName() . ' type decimal(M,D), params is error');

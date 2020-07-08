@@ -9,13 +9,13 @@
 namespace EasySwoole\DDL\Filter\Unsigned;
 
 
-use EasySwoole\DDL\Blueprint\Column;
+use EasySwoole\DDL\Blueprint\ColumnInterface;
 use EasySwoole\DDL\Contracts\FilterInterface;
 
 class FilterInt implements FilterInterface
 {
 
-    public static function run(Column $column)
+    public static function run(ColumnInterface $column)
     {
 
     }

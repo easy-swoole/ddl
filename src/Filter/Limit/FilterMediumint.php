@@ -9,12 +9,12 @@
 namespace EasySwoole\DDL\Filter\Limit;
 
 
-use EasySwoole\DDL\Blueprint\Column;
+use EasySwoole\DDL\Blueprint\ColumnInterface;
 use EasySwoole\DDL\Contracts\FilterInterface;
 
 class FilterMediumint implements FilterInterface
 {
-    public static function run(Column $column)
+    public static function run(ColumnInterface $column)
     {
         if ($column->getColumnLimit() < 0 || $column->getColumnLimit() > 255) {
             throw new \InvalidArgumentException('col ' . $column->getColumnName() . ' type mediumint(limit), limit must be range 1 to 255');
