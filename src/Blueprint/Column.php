@@ -13,9 +13,8 @@ use InvalidArgumentException;
  * Class Column
  * @package EasySwoole\DDL\Blueprint
  */
-class Column
+class Column implements ColumnInterface
 {
-
     protected $columnName;     // 字段名称
     protected $columnType;     // 字段类型
     protected $columnLimit;    // 字段限制 如 INT(11) / decimal(10,2) 括号部分
