@@ -3,6 +3,7 @@
 namespace EasySwoole\DDL;
 
 use EasySwoole\DDL\Blueprint\Table;
+use EasySwoole\DDL\Blueprint\Create\Table as CreateTable;
 
 /**
  * 语句生成器
@@ -23,4 +24,18 @@ class DDLBuilder
         $callable($blueprint);
         return $blueprint->__createDDL();
     }
+
+    /**
+     * 生成建表语句
+     * @param string $table 表名称
+     * @param callable $callable 在闭包中描述创建过程
+     * @return string 返回生成的DDL语句
+     */
+    static function create($table, callable $callable)
+    {
+        $blueprint = new CreateTable($table);
+        $callable($blueprint);
+        return $blueprint->__createDDL();
+    }
+
 }
