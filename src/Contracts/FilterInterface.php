@@ -9,9 +9,9 @@
 namespace EasySwoole\DDL\Contracts;
 
 
-use EasySwoole\DDL\Blueprint\Column;
+use EasySwoole\DDL\Blueprint\ColumnInterface;
 
 interface FilterInterface
 {
-    public static function run(Column $column);
+    public static function run(ColumnInterface $column);
 }

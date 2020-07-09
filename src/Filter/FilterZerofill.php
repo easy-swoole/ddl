@@ -9,12 +9,12 @@
 namespace EasySwoole\DDL\Filter;
 
 
-use EasySwoole\DDL\Blueprint\Column;
+use EasySwoole\DDL\Blueprint\ColumnInterface;
 use EasySwoole\DDL\Contracts\FilterInterface;
 
 class FilterZerofill implements FilterInterface
 {
-    public static function run(Column $column)
+    public static function run(ColumnInterface $column)
     {
         call_user_func(['EasySwoole\\DDL\\Filter\\Zerofill\\Filter' . ucfirst($column->getColumnType()), 'run'], $column);
     }

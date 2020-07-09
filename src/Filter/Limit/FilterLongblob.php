@@ -9,12 +9,12 @@
 namespace EasySwoole\DDL\Filter\Limit;
 
 
-use EasySwoole\DDL\Blueprint\Column;
+use EasySwoole\DDL\Blueprint\ColumnInterface;
 use EasySwoole\DDL\Contracts\FilterInterface;
 
 class FilterLongblob implements FilterInterface
 {
-    public static function run(Column $column)
+    public static function run(ColumnInterface $column)
     {
         if ($column->getColumnLimit()) {
             throw new \InvalidArgumentException('col ' . $column->getColumnName() . ' type longblob no require fsp ');

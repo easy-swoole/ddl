@@ -9,12 +9,12 @@
 namespace EasySwoole\DDL\Filter\Limit;
 
 
-use EasySwoole\DDL\Blueprint\Column;
+use EasySwoole\DDL\Blueprint\ColumnInterface;
 use EasySwoole\DDL\Contracts\FilterInterface;
 
 class FilterDouble implements FilterInterface
 {
-    public static function run(Column $column)
+    public static function run(ColumnInterface $column)
     {
         if (is_array($column->getColumnLimit())) {
             list($precision, $digits) = $column->getColumnLimit();
