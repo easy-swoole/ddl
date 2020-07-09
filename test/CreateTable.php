@@ -16,62 +16,43 @@ use EasySwoole\DDL\Enum\Character;
 use EasySwoole\DDL\Enum\Engine;
 use EasySwoole\DDL\Enum\Foreign;
 
-
-
-//测试兼容老版本写法
-$stuQql = DDLBuilder::table('student', function (\EasySwoole\DDL\Blueprint\Table $table) {
+$stuQql = DDLBuilder::create('student', function (CreateTable $table) {
     $table->setIfNotExists()->setTableComment('学生表');          //设置表名称
     $table->setTableCharset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
     $table->setTableEngine(Engine::INNODB);                     //设置表引擎
     $table->setTableAutoIncrement(100);                    //设置表起始自增数
-    $table->colInt('stu_id')->setIsAutoIncrement()->setIsPrimaryKey()->setIsUnsigned()->setColumnComment('学生ID');  //创建stu_id设置主键并自动增长
-    $table->colVarChar('stu_name', 30)->setColumnComment('学生姓名');
-    $table->colChar('sex', 1)->setColumnComment('性别：1男，2女')->setDefaultValue(1);
-    $table->colDate('birthday')->setIsNotNull(false)->setColumnComment('出生日期');
-    $table->colInt('created_at', 10)->setColumnComment('创建时间');
-    $table->colInt('updated_at', 10)->setColumnComment('更新时间');
-    $table->indexNormal('ind_stu_name', 'stu_name')->setIndexComment('学生姓名--普通索引');//设置索引
-});
-echo $stuQql . PHP_EOL;
-
-
-$stuQql = DDLBuilder::create('student', function (CreateTable $table) {
-    $table->ifNotExists()->comment('学生表');          //设置表名称
-    $table->charset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
-    $table->engine(Engine::INNODB);                     //设置表引擎
-    $table->autoIncrement(100);                    //设置表起始自增数
-    $table->int('stu_id')->autoIncrement()->primaryKey()->unsigned()->comment('学生ID');  //创建stu_id设置主键并自动增长
-    $table->varchar('stu_name', 30)->comment('学生姓名');
-    $table->char('sex', 1)->comment('性别：1男，2女')->default(1);
-    $table->date('birthday')->notNull(false)->comment('出生日期');
-    $table->int('created_at', 10)->comment('创建时间');
-    $table->int('updated_at', 10)->comment('更新时间');
-    $table->normal('ind_stu_name', 'stu_name')->comment('学生姓名--普通索引');//设置索引
+    $table->int('stu_id')->setIsAutoIncrement()->setIsPrimaryKey()->setIsUnsigned()->setColumnComment('学生ID');  //创建stu_id设置主键并自动增长
+    $table->varchar('stu_name', 30)->setColumnComment('学生姓名');
+    $table->char('sex', 1)->setColumnComment('性别：1男，2女')->setDefaultValue(1);
+    $table->date('birthday')->setIsNotNull(false)->setColumnComment('出生日期');
+    $table->int('created_at', 10)->setColumnComment('创建时间');
+    $table->int('updated_at', 10)->setColumnComment('更新时间');
+    $table->normal('ind_stu_name', 'stu_name')->setIndexComment('学生姓名--普通索引');//设置索引
 });
 echo $stuQql . PHP_EOL;
 
 $courseSql = DDLBuilder::create('course', function (CreateTable $table) {
-    $table->ifNotExists()->comment('课程表');          //设置表名称
-    $table->charset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
-    $table->engine(Engine::INNODB);                     //设置表引擎
-    $table->int('id', 3)->primaryKey()->autoIncrement()->unsigned()->zeroFill()->comment('课程id');
-    $table->varchar('course_name', 100)->comment('课程名称');
-    $table->char('status', 1)->default(1)->comment('课程状态：1正常，0隐藏');
-    $table->int('created_at', 10)->comment('创建时间');
-    $table->int('updated_at', 10)->comment('更新时间');
-    $table->unique('uni_course_name', 'course_name')->comment('课程名称--唯一索引');//设置索引
+    $table->setIfNotExists()->setTableComment('课程表');          //设置表名称
+    $table->setTableCharset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
+    $table->setTableEngine(Engine::INNODB);                     //设置表引擎
+    $table->int('id', 3)->setIsPrimaryKey()->setIsAutoIncrement()->setIsUnsigned()->setZeroFill()->setColumnComment('课程id');
+    $table->varchar('course_name', 100)->setColumnComment('课程名称');
+    $table->char('status', 1)->setDefaultValue(1)->setColumnComment('课程状态：1正常，0隐藏');
+    $table->int('created_at', 10)->setColumnComment('创建时间');
+    $table->int('updated_at', 10)->setColumnComment('更新时间');
+    $table->unique('uni_course_name', 'course_name')->setIndexComment('课程名称--唯一索引');//设置索引
 });
 echo $courseSql . PHP_EOL;
 
 $scoreSql = DDLBuilder::create('score', function (CreateTable $table) {
-    $table->ifNotExists()->comment('成绩表');          //设置表名称
-    $table->charset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
-    $table->engine(Engine::INNODB);                     //设置表引擎
-    $table->int('id')->unsigned()->autoIncrement()->primaryKey()->comment('自增ID');
-    $table->int('stu_id')->unsigned()->comment('学生id');
-    $table->int('course_id')->unsigned()->zeroFill()->comment('课程id');
-    $table->float('score', 3, 1)->comment('成绩');
-    $table->int('created_at', 10)->comment('创建时间');
+    $table->setIfNotExists()->setTableComment('成绩表');          //设置表名称
+    $table->setTableCharset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
+    $table->setTableEngine(Engine::INNODB);                     //设置表引擎
+    $table->int('id')->setIsUnsigned()->setIsAutoIncrement()->setIsPrimaryKey()->setColumnComment('自增ID');
+    $table->int('stu_id')->setIsUnsigned()->setColumnComment('学生id');
+    $table->int('course_id')->setIsUnsigned()->setZeroFill()->setColumnComment('课程id');
+    $table->float('score', 3, 1)->setColumnComment('成绩');
+    $table->int('created_at', 10)->setColumnComment('创建时间');
     $table->foreign(null,'stu_id','student','stu_id')
         ->onDelete(Foreign::CASCADE)->onUpdate(Foreign::CASCADE);
 });
