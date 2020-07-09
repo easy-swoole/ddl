@@ -10,6 +10,17 @@ use EasySwoole\DDL\Filter\FilterZerofill;
 use InvalidArgumentException;
 
 /**
+ * @method Column setColumnLimit($limit)
+ * @method Column setColumnComment(string $comment)
+ * @method Column setColumnCharset(string $charset)
+ * @method Column setZeroFill(bool $enable = true)
+ * @method Column setDefaultValue($value)
+ * @method Column setIsUnsigned(bool $enable = true)
+ * @method Column setIsNotNull(bool $enable = true)
+ * @method Column setIsAutoIncrement(bool $enable = true)
+ * @method Column setIsBinary(bool $enable = true)
+ * @method Column setIsPrimaryKey(bool $enable = true)
+ * @method Column setIsUnique(bool $enable = true)
  * 建表字段构造器
  * Class Column
  * @package EasySwoole\DDL\Blueprint\Create
@@ -305,6 +316,21 @@ class Column implements ColumnInterface
     function __toString()
     {
         return $this->__createDDL();
+    }
+
+    //兼容老版本写法
+    function __call($name, $arguments)
+    {
+        if ($name == 'setDefaultValue'){
+            return $this->default(...$arguments);
+        }
+        $prefix = ['setColumn', 'set', 'setIs'];
+        foreach ($prefix as $str){
+            if (strpos($name,$str) === 0 && method_exists($this,lcfirst(substr($name,strlen($str))))){
+                return $this->{substr($name,strlen($str))}(...$arguments);
+            }
+        }
+        return $this->{$name}(...$arguments);
     }
 
     /**
