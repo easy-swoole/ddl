@@ -6,6 +6,7 @@ use \EasySwoole\DDL\Enum\Index as IndexType;
 use InvalidArgumentException;
 
 /**
+ * @method Index setIndexComment(string $comment)
  * 索引构造器
  * Class Index
  * @package EasySwoole\DDL\Blueprint
@@ -128,5 +129,14 @@ class Index
     function __toString()
     {
         return $this->__createDDL();
+    }
+
+    //兼容老版本写法
+    function __call($name, $arguments)
+    {
+        if ($name == 'setIndexComment'){
+            return $this->comment(...$arguments);
+        }
+        return $this->{$name}(...$arguments);
     }
 }

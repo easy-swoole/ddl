@@ -8,6 +8,40 @@ use EasySwoole\DDL\Enum\Engine as Engines;
 use EasySwoole\DDL\Enum\Index as IndexType;
 
 /**
+ * @method Column colInt(string $name, int $limit = null)
+ * @method Column colBigInt(string $name, int $limit = null)
+ * @method Column colTinyInt(string $name, int $limit = null)
+ * @method Column colSmallInt(string $name, int $limit = null)
+ * @method Column colMediumInt(string $name, int $limit = null)
+ * @method Column colFloat(string $name, int $precision = null, int $digits = null)
+ * @method Column colDouble(string $name, int $precision = null, int $digits = null)
+ * @method Column colDecimal(string $name, int $precision = 10, int $digits = 0)
+ * @method Column colDate(string $name)
+ * @method Column colYear(string $name)
+ * @method Column colTime(string $name, ?int $fsp = null)
+ * @method Column colDateTime(string $name, ?int $fsp = null)
+ * @method Column colTimestamp(string $name, ?int $fsp = null)
+ * @method Column colChar(string $name, ?int $limit = null)
+ * @method Column colVarChar(string $name, ?int $limit = null)
+ * @method Column colText(string $name)
+ * @method Column colTinyText(string $name)
+ * @method Column colLongText(string $name)
+ * @method Column colMediumText(string $name)
+ * @method Column colBlob(string $name)
+ * @method Column colLongBlob(string $name)
+ * @method Column colTinyBlob(string $name)
+ * @method Column colMediumBlob(string $name)
+ * @method Index indexNormal(string $name, $columns)
+ * @method Index indexUnique(string $name, $columns)
+ * @method Index indexPrimary(string $name, $columns)
+ * @method Index indexFullText(string $name, $columns)
+ * @method Table setIsTemporary($enable = true)
+ * @method Table setIfNotExists($enable = true)
+ * @method Table setTableName(string $name)
+ * @method Table setTableEngine(string $engine)
+ * @method Table setTableComment(string $comment)
+ * @method Table setTableCharset(string $charset)
+ * @method Table setTableAutoIncrement(int $startIncrement)
  * 创建表结构描述
  * 暂只支持创建表 CREATE 结构
  * Class Table
@@ -29,7 +63,7 @@ class Table
     // 额外选项
     protected $isTemporary = false;  // 是否临时表
     protected $ifNotExists = false;  // 是否不存在才创建
-    protected $autoIncrement;         // 默认自增从该值开始
+    protected $autoIncrement;        // 默认自增从该值开始
 
     /**
      * Table constructor.
@@ -606,5 +640,17 @@ class Table
     function __toString()
     {
         return $this->__createDDL();
+    }
+
+    //兼容老版本写法
+    function __call($name, $arguments)
+    {
+        $prefix = ['setTable', 'set', 'index', 'col'];
+        foreach ($prefix as $str){
+            if (strpos($name,$str) === 0 && method_exists($this,lcfirst(substr($name,strlen($str))))){
+                return $this->{substr($name,strlen($str))}(...$arguments);
+            }
+        }
+        return $this->{$name}(...$arguments);
     }
 }

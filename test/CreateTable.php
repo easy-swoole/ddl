@@ -16,6 +16,25 @@ use EasySwoole\DDL\Enum\Character;
 use EasySwoole\DDL\Enum\Engine;
 use EasySwoole\DDL\Enum\Foreign;
 
+
+
+//测试兼容老版本写法
+$stuQql = DDLBuilder::table('student', function (\EasySwoole\DDL\Blueprint\Table $table) {
+    $table->setIfNotExists()->setTableComment('学生表');          //设置表名称
+    $table->setTableCharset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
+    $table->setTableEngine(Engine::INNODB);                     //设置表引擎
+    $table->setTableAutoIncrement(100);                    //设置表起始自增数
+    $table->colInt('stu_id')->setIsAutoIncrement()->setIsPrimaryKey()->setIsUnsigned()->setColumnComment('学生ID');  //创建stu_id设置主键并自动增长
+    $table->colVarChar('stu_name', 30)->setColumnComment('学生姓名');
+    $table->colChar('sex', 1)->setColumnComment('性别：1男，2女')->setDefaultValue(1);
+    $table->colDate('birthday')->setIsNotNull(false)->setColumnComment('出生日期');
+    $table->colInt('created_at', 10)->setColumnComment('创建时间');
+    $table->colInt('updated_at', 10)->setColumnComment('更新时间');
+    $table->indexNormal('ind_stu_name', 'stu_name')->setIndexComment('学生姓名--普通索引');//设置索引
+});
+echo $stuQql . PHP_EOL;
+
+
 $stuQql = DDLBuilder::create('student', function (CreateTable $table) {
     $table->ifNotExists()->comment('学生表');          //设置表名称
     $table->charset(Character::UTF8MB4_GENERAL_CI);     //设置表字符集
