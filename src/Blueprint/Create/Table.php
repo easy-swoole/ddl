@@ -8,40 +8,6 @@ use EasySwoole\DDL\Enum\Engine as Engines;
 use EasySwoole\DDL\Enum\Index as IndexType;
 
 /**
- * @method Column colInt(string $name, int $limit = null)
- * @method Column colBigInt(string $name, int $limit = null)
- * @method Column colTinyInt(string $name, int $limit = null)
- * @method Column colSmallInt(string $name, int $limit = null)
- * @method Column colMediumInt(string $name, int $limit = null)
- * @method Column colFloat(string $name, int $precision = null, int $digits = null)
- * @method Column colDouble(string $name, int $precision = null, int $digits = null)
- * @method Column colDecimal(string $name, int $precision = 10, int $digits = 0)
- * @method Column colDate(string $name)
- * @method Column colYear(string $name)
- * @method Column colTime(string $name, ?int $fsp = null)
- * @method Column colDateTime(string $name, ?int $fsp = null)
- * @method Column colTimestamp(string $name, ?int $fsp = null)
- * @method Column colChar(string $name, ?int $limit = null)
- * @method Column colVarChar(string $name, ?int $limit = null)
- * @method Column colText(string $name)
- * @method Column colTinyText(string $name)
- * @method Column colLongText(string $name)
- * @method Column colMediumText(string $name)
- * @method Column colBlob(string $name)
- * @method Column colLongBlob(string $name)
- * @method Column colTinyBlob(string $name)
- * @method Column colMediumBlob(string $name)
- * @method Index indexNormal(string $name, $columns)
- * @method Index indexUnique(string $name, $columns)
- * @method Index indexPrimary(string $name, $columns)
- * @method Index indexFullText(string $name, $columns)
- * @method Table setIsTemporary($enable = true)
- * @method Table setIfNotExists($enable = true)
- * @method Table setTableName(string $name)
- * @method Table setTableEngine(string $engine)
- * @method Table setTableComment(string $comment)
- * @method Table setTableCharset(string $charset)
- * @method Table setTableAutoIncrement(int $startIncrement)
  * 创建表结构描述
  * 暂只支持创建表 CREATE 结构
  * Class Table
@@ -71,7 +37,7 @@ class Table
      */
     function __construct($tableName)
     {
-        $this->tableName($tableName);
+        $this->setTableName($tableName);
     }
 
     // 以下为字段构造方法
@@ -85,7 +51,7 @@ class Table
     function int(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::INT);
-        $this->columns[$name]->limit($limit);
+        $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
 
@@ -98,7 +64,7 @@ class Table
     function bigint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::BIGINT);
-        $this->columns[$name]->limit($limit);
+        $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
 
@@ -111,7 +77,7 @@ class Table
     function tinyint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TINYINT);
-        $this->columns[$name]->limit($limit);
+        $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
 
@@ -124,7 +90,7 @@ class Table
     function smallint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::SMALLINT);
-        $this->columns[$name]->limit($limit);
+        $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
 
@@ -137,7 +103,7 @@ class Table
     function mediumInt(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMINT);
-        $this->columns[$name]->limit($limit);
+        $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
 
@@ -153,9 +119,9 @@ class Table
     {
         $this->columns[$name] = $this->createColumn($name, DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
-            $this->columns[$name]->limit([$precision, $digits]);
+            $this->columns[$name]->setColumnLimit([$precision, $digits]);
         } elseif (is_numeric($precision)) {
-            $this->columns[$name]->limit($precision);
+            $this->columns[$name]->setColumnLimit($precision);
         }
         return $this->columns[$name];
     }
@@ -171,9 +137,9 @@ class Table
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
-            $this->columns[$name]->limit([$precision, $digits]);
+            $this->columns[$name]->setColumnLimit([$precision, $digits]);
         } elseif (is_numeric($precision)) {
-            $this->columns[$name]->limit($precision);
+            $this->columns[$name]->setColumnLimit($precision);
         }
         return $this->columns[$name];
     }
@@ -190,7 +156,7 @@ class Table
     function decimal(string $name, int $precision = 10, int $digits = 0): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DECIMAL);
-        $this->columns[$name]->limit([$precision, $digits]);
+        $this->columns[$name]->setColumnLimit([$precision, $digits]);
         return $this->columns[$name];
     }
 
@@ -226,7 +192,7 @@ class Table
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TIME);
         if (is_numeric($fsp)) {
-            $this->columns[$name]->limit($fsp);
+            $this->columns[$name]->setColumnLimit($fsp);
         }
         return $this->columns[$name];
     }
@@ -241,7 +207,7 @@ class Table
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DATETIME);
         if (is_numeric($fsp)) {
-            $this->columns[$name]->limit($fsp);
+            $this->columns[$name]->setColumnLimit($fsp);
         }
         return $this->columns[$name];
     }
@@ -256,7 +222,7 @@ class Table
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TIMESTAMP);
         if (is_numeric($fsp)) {
-            $this->columns[$name]->limit($fsp);
+            $this->columns[$name]->setColumnLimit($fsp);
         }
         return $this->columns[$name];
     }
@@ -270,7 +236,7 @@ class Table
     function char(string $name, ?int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::CHAR);
-        $this->columns[$name]->limit($limit);
+        $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
 
@@ -283,7 +249,7 @@ class Table
     function varchar(string $name, ?int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::VARCHAR);
-        $this->columns[$name]->limit($limit);
+        $this->columns[$name]->setColumnLimit($limit);
         return $this->columns[$name];
     }
 
@@ -382,7 +348,7 @@ class Table
      * 普通索引
      * @param string|null $name 索引名称(不需要名称也可以传null)
      * @param string|array $columns 索引字段(多个字段可以传入数组)
-     * @return mixed
+     * @return Index
      */
     function normal(string $name, $columns): Index
     {
@@ -395,7 +361,7 @@ class Table
      * 请注意这属于约束的一种类型 不要和字段上的约束重复定义
      * @param string|null $name 索引名称(不需要名称也可以传null)
      * @param string|array $columns 索引字段(多个字段可以传入数组)
-     * @return mixed
+     * @return Index
      */
     function unique(string $name, $columns): Index
     {
@@ -408,7 +374,7 @@ class Table
      * 请注意这属于约束的一种类型 不要和字段上的约束重复定义
      * @param string|null $name 索引名称(不需要名称也可以传null)
      * @param string|array $columns 索引字段(多个字段可以传入数组)
-     * @return mixed
+     * @return Index
      */
     function primary(string $name, $columns): Index
     {
@@ -421,7 +387,7 @@ class Table
      * 请注意该类型的索引只能施加在TEXT类型的字段上
      * @param string|null $name 索引名称(不需要名称也可以传null)
      * @param string|array $columns 索引字段(多个字段可以传入数组)
-     * @return mixed
+     * @return Index
      */
     function fulltext(string $name, $columns): Index
     {
@@ -455,7 +421,7 @@ class Table
      * @param bool $enable
      * @return Table
      */
-    function isTemporary($enable = true): Table
+    function setIsTemporary($enable = true): Table
     {
         $this->isTemporary = $enable;
         return $this;
@@ -467,7 +433,7 @@ class Table
      * @param bool $enable
      * @return Table
      */
-    function ifNotExists($enable = true): Table
+    function setIfNotExists($enable = true): Table
     {
         $this->ifNotExists = $enable;
         return $this;
@@ -478,7 +444,7 @@ class Table
      * @param string $name
      * @return Table
      */
-    function tableName(string $name): Table
+    function setTableName(string $name): Table
     {
         $name = trim($name);
         if (empty($name)) {
@@ -493,7 +459,7 @@ class Table
      * @param string $engine
      * @return Table
      */
-    function engine(string $engine): Table
+    function setTableEngine(string $engine): Table
     {
         $engine = trim($engine);
         if (!Engines::isValidValue($engine)) {
@@ -508,7 +474,7 @@ class Table
      * @param string $comment
      * @return Table
      */
-    function comment(string $comment): Table
+    function setTableComment(string $comment): Table
     {
         $this->comment = $comment;
         return $this;
@@ -519,7 +485,7 @@ class Table
      * @param string $charset
      * @return Table
      */
-    function charset(string $charset): Table
+    function setTableCharset(string $charset): Table
     {
         $charset = trim($charset);
         if (!Character::isValidValue($charset)) {
@@ -533,9 +499,48 @@ class Table
      * 设置起始自增值
      * @param int $startIncrement
      */
-    function autoIncrement(int $startIncrement)
+    function setTableAutoIncrement(int $startIncrement)
     {
         $this->autoIncrement = $startIncrement;
+    }
+
+    /**
+     * 创建一个列对象
+     * 继承可以改变返回的类对象以使用自定义对象
+     * @param string $columnName
+     * @param string $columnType
+     * @return Column
+     */
+    protected function createColumn(string $columnName, string $columnType)
+    {
+        return new Column($columnName, $columnType);
+    }
+
+    /**
+     * 创建一个索引对象
+     * 继承可以改变返回的类对象以使用自定义对象
+     * @param string|null $indexName
+     * @param $indexType
+     * @param $indexColumns
+     * @return Index
+     */
+    protected function createIndex(?string $indexName, $indexType, $indexColumns)
+    {
+        return new Index($indexName, $indexType, $indexColumns);
+    }
+
+    /**
+     * 创建一个外键对象
+     * 继承可以改变返回的类对象以使用自定义对象
+     * @param string|null $foreignName
+     * @param string $localColumn
+     * @param string $relatedTableName
+     * @param string $foreignColumn
+     * @return Foreign
+     */
+    protected function createForeignKey(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    {
+        return new Foreign($foreignName, $localColumn, $relatedTableName, $foreignColumn);
     }
 
     // 生成表结构 带有下划线的方法请不要自行调用
@@ -595,62 +600,11 @@ class Table
     }
 
     /**
-     * 创建一个列对象
-     * 继承可以改变返回的类对象以使用自定义对象
-     * @param string $columnName
-     * @param string $columnType
-     * @return Column
-     */
-    protected function createColumn(string $columnName, string $columnType)
-    {
-        return new Column($columnName, $columnType);
-    }
-
-    /**
-     * 创建一个索引对象
-     * 继承可以改变返回的类对象以使用自定义对象
-     * @param string|null $indexName
-     * @param $indexType
-     * @param $indexColumns
-     * @return Index
-     */
-    protected function createIndex(?string $indexName, $indexType, $indexColumns)
-    {
-        return new Index($indexName, $indexType, $indexColumns);
-    }
-
-    /**
-     * 创建一个外键对象
-     * 继承可以改变返回的类对象以使用自定义对象
-     * @param string|null $foreignName
-     * @param string $localColumn
-     * @param string $relatedTableName
-     * @param string $foreignColumn
-     * @return Foreign
-     */
-    protected function createForeignKey(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
-    {
-        return new Foreign($foreignName, $localColumn, $relatedTableName, $foreignColumn);
-    }
-
-    /**
      * 转化为字符串
      * @return string
      */
     function __toString()
     {
         return $this->__createDDL();
-    }
-
-    //兼容老版本写法
-    function __call($name, $arguments)
-    {
-        $prefix = ['setTable', 'set', 'index', 'col'];
-        foreach ($prefix as $str){
-            if (strpos($name,$str) === 0 && method_exists($this,lcfirst(substr($name,strlen($str))))){
-                return $this->{substr($name,strlen($str))}(...$arguments);
-            }
-        }
-        return $this->{$name}(...$arguments);
     }
 }

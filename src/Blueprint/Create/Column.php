@@ -10,17 +10,6 @@ use EasySwoole\DDL\Filter\FilterZerofill;
 use InvalidArgumentException;
 
 /**
- * @method Column setColumnLimit($limit)
- * @method Column setColumnComment(string $comment)
- * @method Column setColumnCharset(string $charset)
- * @method Column setZeroFill(bool $enable = true)
- * @method Column setDefaultValue($value)
- * @method Column setIsUnsigned(bool $enable = true)
- * @method Column setIsNotNull(bool $enable = true)
- * @method Column setIsAutoIncrement(bool $enable = true)
- * @method Column setIsBinary(bool $enable = true)
- * @method Column setIsPrimaryKey(bool $enable = true)
- * @method Column setIsUnique(bool $enable = true)
  * 建表字段构造器
  * Class Column
  * @package EasySwoole\DDL\Blueprint\Create
@@ -87,7 +76,7 @@ class Column implements ColumnInterface
      * @param integer|array $limit
      * @return Column
      */
-    function limit($limit): Column
+    function setColumnLimit($limit): Column
     {
         // TODO 暂未做规范判断
         // 此处根据类型的不同实际上还应该判断 TEXT/BLOB 不可能存在limit
@@ -101,7 +90,7 @@ class Column implements ColumnInterface
      * @param string $comment
      * @return Column
      */
-    function comment(string $comment): Column
+    function setColumnComment(string $comment): Column
     {
         $this->columnComment = $comment;
         return $this;
@@ -112,7 +101,7 @@ class Column implements ColumnInterface
      * @param string $charset
      * @return Column
      */
-    function charset(string $charset): Column
+    function setColumnCharset(string $charset): Column
     {
         $this->columnCharset = $charset;
         return $this;
@@ -123,7 +112,7 @@ class Column implements ColumnInterface
      * @param bool $enable
      * @return Column
      */
-    function zeroFill(bool $enable = true): Column
+    function setZeroFill(bool $enable = true): Column
     {
         $this->zeroFill = $enable;
         return $this;
@@ -134,7 +123,7 @@ class Column implements ColumnInterface
      * @param bool $enable
      * @return Column
      */
-    function unsigned(bool $enable = true): Column
+    function setIsUnsigned(bool $enable = true): Column
     {
         // TODO 暂未做规范判断
         // 同样需要做规范判断 字段为文本/日期时间/BLOB时不能设置为无符号
@@ -147,7 +136,7 @@ class Column implements ColumnInterface
      * @param $value
      * @return Column
      */
-    function default($value): Column
+    function setDefaultValue($value): Column
     {
         // TODO 暂未做规范判断
         // 同样需要做规范判断 字段为文本/BLOB时不能设置默认值
@@ -160,7 +149,7 @@ class Column implements ColumnInterface
      * @param bool $enable
      * @return Column
      */
-    function notNull(bool $enable = true): Column
+    function setIsNotNull(bool $enable = true): Column
     {
         $this->isNotNull = $enable;
         return $this;
@@ -171,7 +160,7 @@ class Column implements ColumnInterface
      * @param bool $enable
      * @return Column
      */
-    function autoIncrement(bool $enable = true): Column
+    function setIsAutoIncrement(bool $enable = true): Column
     {
         // TODO 暂未做规范判断
         // 同样需要做规范判断 只有数字类型才允许自增
@@ -185,7 +174,7 @@ class Column implements ColumnInterface
      * @param bool $enable
      * @return Column
      */
-    function binary(bool $enable = true): Column
+    function setIsBinary(bool $enable = true): Column
     {
         // TODO 暂未做规范判断
         // 同样需要做规范判断 只有字符串类型才允许二进制
@@ -199,7 +188,7 @@ class Column implements ColumnInterface
      * @param bool $enable
      * @return Column
      */
-    function primaryKey(bool $enable = true): Column
+    function setIsPrimaryKey(bool $enable = true): Column
     {
         $this->isPrimaryKey = $enable;
         return $this;
@@ -211,7 +200,7 @@ class Column implements ColumnInterface
      * @param bool $enable
      * @return Column
      */
-    function unique(bool $enable = true): Column
+    function setIsUnique(bool $enable = true): Column
     {
         $this->isUnique = $enable;
         return $this;
@@ -269,7 +258,7 @@ class Column implements ColumnInterface
     private function parseDataType()
     {
         $columnLimit = $this->parseColumnLimit();
-        $columnType = $this->columnType;
+        $columnType  = $this->columnType;
         if ($columnLimit) {
             $columnType .= $columnLimit;
         }
@@ -287,7 +276,7 @@ class Column implements ColumnInterface
         FilterLimit::run($this);//检测limit是否合法
         FilterUnsigned::run($this); //检测无符号类型
         FilterZerofill::run($this); //检测是否补充长度
-        $default = $this->parseDefaultValue();
+        $default       = $this->parseDefaultValue();
         $columnCharset = $this->columnCharset ? explode('_', $this->columnCharset)[0] : false;
         return implode(' ',
             array_filter(
@@ -316,21 +305,6 @@ class Column implements ColumnInterface
     function __toString()
     {
         return $this->__createDDL();
-    }
-
-    //兼容老版本写法
-    function __call($name, $arguments)
-    {
-        if ($name == 'setDefaultValue'){
-            return $this->default(...$arguments);
-        }
-        $prefix = ['setColumn', 'set', 'setIs'];
-        foreach ($prefix as $str){
-            if (strpos($name,$str) === 0 && method_exists($this,lcfirst(substr($name,strlen($str))))){
-                return $this->{substr($name,strlen($str))}(...$arguments);
-            }
-        }
-        return $this->{$name}(...$arguments);
     }
 
     /**
