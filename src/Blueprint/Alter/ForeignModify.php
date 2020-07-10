@@ -32,10 +32,18 @@ class ForeignModify
      * @param string $option
      * @return ForeignModify
      */
-    public function onDelete(string $option): ForeignModify
+    public function setOnDelete(string $option): ForeignModify
     {
         $this->foreignAddObj->setOnDelete($option);
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOnDelete()
+    {
+        return $this->foreignAddObj->getOnDelete();
     }
 
     /**
@@ -44,10 +52,18 @@ class ForeignModify
      * @param string $option
      * @return ForeignModify
      */
-    public function onUpdate(string $option): ForeignModify
+    public function setOnUpdate(string $option): ForeignModify
     {
         $this->foreignAddObj->setOnUpdate($option);
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOnUpdate()
+    {
+        return $this->foreignAddObj->getOnUpdate();
     }
 
     /**

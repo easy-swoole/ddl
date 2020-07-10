@@ -43,7 +43,7 @@ $scoreSql = DDLBuilder::create('score', function (CreateTable $table) {
     $table->int('created_at', 10)->setColumnComment('创建时间');
     $table->unique('ind_score', 'score')->setIndexComment('成绩--普通索引');
     $table->foreign('fk_stu_id', 'id', 'student', 'stu_id')
-        ->onDelete(Foreign::CASCADE)->onUpdate(Foreign::CASCADE);
+        ->setOnDelete(Foreign::CASCADE)->setOnUpdate(Foreign::CASCADE);
 });
 echo $scoreSql . PHP_EOL . PHP_EOL;
 

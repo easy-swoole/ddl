@@ -54,7 +54,7 @@ $scoreSql = DDLBuilder::create('score', function (CreateTable $table) {
     $table->float('score', 3, 1)->setColumnComment('成绩');
     $table->int('created_at', 10)->setColumnComment('创建时间');
     $table->foreign(null,'stu_id','student','stu_id')
-        ->onDelete(Foreign::CASCADE)->onUpdate(Foreign::CASCADE);
+        ->setOnDelete(Foreign::CASCADE)->setOnUpdate(Foreign::CASCADE);
 });
 echo $scoreSql;
 
