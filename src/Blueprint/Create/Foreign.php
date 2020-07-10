@@ -33,7 +33,7 @@ class Foreign
      * @param string $relatedTableName
      * @param string $foreignColumn
      */
-    function __construct(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    public function __construct(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
     {
         $this->setForeignName($foreignName);
         $this->setLocalColumn($localColumn);
@@ -103,7 +103,7 @@ class Foreign
      * @param string $option
      * @return Foreign
      */
-    function onDelete(string $option)
+    public function setOnDelete(string $option)
     {
         $option = trim($option);
         if (!in_array($option, $this->ForeignOption)) {
@@ -119,7 +119,7 @@ class Foreign
      * @param string $option
      * @return Foreign
      */
-    function onUpdate(string $option)
+    public function setOnUpdate(string $option)
     {
         $option = trim($option);
         if (!in_array($option, $this->ForeignOption)) {
@@ -134,7 +134,7 @@ class Foreign
      * 带有下划线的方法请不要自行调用
      * @return string
      */
-    function __createDDL()
+    public function __createDDL()
     {
         return implode(' ',
             array_filter(
@@ -153,7 +153,7 @@ class Foreign
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

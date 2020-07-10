@@ -99,7 +99,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param string $comment
      * @return ColumnAbstract
      */
-    function setColumnComment(string $comment)
+    public function setColumnComment(string $comment)
     {
         $this->columnComment = $comment;
         return $this;
@@ -118,7 +118,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param string $charset
      * @return ColumnAbstract
      */
-    function setColumnCharset(string $charset)
+    public function setColumnCharset(string $charset)
     {
         $this->columnCharset = $charset;
         return $this;
@@ -127,7 +127,7 @@ abstract class ColumnAbstract implements ColumnInterface
     /**
      * @return mixed
      */
-    function getColumnCharset()
+    public function getColumnCharset()
     {
         return $this->columnCharset;
     }
@@ -137,7 +137,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param bool $enable
      * @return ColumnAbstract
      */
-    function setZeroFill(bool $enable = true)
+    public function setZeroFill(bool $enable = true)
     {
         $this->zeroFill = $enable;
         return $this;
@@ -146,7 +146,7 @@ abstract class ColumnAbstract implements ColumnInterface
     /**
      * @return mixed
      */
-    function getZeroFill()
+    public function getZeroFill()
     {
         return $this->zeroFill;
     }
@@ -177,7 +177,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param $value
      * @return ColumnAbstract
      */
-    function setDefaultValue($value)
+    public function setDefaultValue($value)
     {
         // TODO 暂未做规范判断
         // 同样需要做规范判断 字段为文本/BLOB时不能设置默认值
@@ -188,7 +188,7 @@ abstract class ColumnAbstract implements ColumnInterface
     /**
      * @return mixed
      */
-    function getDefaultValue()
+    public function getDefaultValue()
     {
         return $this->defaultValue;
     }
@@ -198,7 +198,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param bool $enable
      * @return ColumnAbstract
      */
-    function setIsNotNull(bool $enable = true)
+    public function setIsNotNull(bool $enable = true)
     {
         $this->isNotNull = $enable;
         return $this;
@@ -207,7 +207,7 @@ abstract class ColumnAbstract implements ColumnInterface
     /**
      * @return bool
      */
-    function getIsNotNull()
+    public function getIsNotNull()
     {
         return $this->isNotNull;
     }
@@ -217,7 +217,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param bool $enable
      * @return ColumnAbstract
      */
-    function setIsAutoIncrement(bool $enable = true)
+    public function setIsAutoIncrement(bool $enable = true)
     {
         // TODO 暂未做规范判断
         // 同样需要做规范判断 只有数字类型才允许自增
@@ -225,11 +225,10 @@ abstract class ColumnAbstract implements ColumnInterface
         return $this;
     }
 
-
     /**
      * @return mixed
      */
-    function getIsAutoIncrement()
+    public function getIsAutoIncrement()
     {
         return $this->autoIncrement;
     }
@@ -244,7 +243,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param bool $enable
      * @return ColumnAbstract
      */
-    function setIsBinary(bool $enable = true)
+    public function setIsBinary(bool $enable = true)
     {
         // TODO 暂未做规范判断
         // 同样需要做规范判断 只有字符串类型才允许二进制
@@ -255,7 +254,7 @@ abstract class ColumnAbstract implements ColumnInterface
     /**
      * @return mixed
      */
-    function getIsBinary()
+    public function getIsBinary()
     {
         return $this->isBinary;
     }
@@ -266,7 +265,7 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param bool $enable
      * @return ColumnAbstract
      */
-    function setIsPrimaryKey(bool $enable = true)
+    public function setIsPrimaryKey(bool $enable = true)
     {
         $this->isPrimaryKey = $enable;
         return $this;
@@ -275,7 +274,7 @@ abstract class ColumnAbstract implements ColumnInterface
     /**
      * @return mixed
      */
-    function getIsPrimaryKey()
+    public function getIsPrimaryKey()
     {
         return $this->isPrimaryKey;
     }
@@ -286,24 +285,31 @@ abstract class ColumnAbstract implements ColumnInterface
      * @param bool $enable
      * @return ColumnAbstract
      */
-    function setIsUnique(bool $enable = true)
+    public function setIsUnique(bool $enable = true)
     {
         $this->isUnique = $enable;
         return $this;
     }
 
-    function getIsUnique()
+    /**
+     * @return mixed
+     */
+    public function getIsUnique()
     {
         return $this->isUnique;
     }
 
+    /**
+     * 构造器最终生成方法
+     * @return mixed
+     */
     abstract public function __createDDL();
 
     /**
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

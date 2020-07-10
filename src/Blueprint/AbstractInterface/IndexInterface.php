@@ -14,26 +14,46 @@ interface IndexInterface
      * @param string $name
      * @return IndexInterface
      */
-    function setIndexName(?string $name = null);
+    public function setIndexName(?string $name = null);
+
+    /**
+     * @return mixed
+     */
+    public function getIndexName();
 
     /**
      * 设置索引类型
      * @param string $type
      * @return IndexInterface
      */
-    function setIndexType(string $type);
+    public function setIndexType(string $type);
+
+    /**
+     * @return mixed
+     */
+    public function getIndexType();
 
     /**
      * 设置索引字段
      * @param string|array $columns 可以设置字符串和数组
      * @return IndexInterface
      */
-    function setIndexColumns($columns);
+    public function setIndexColumns($columns);
+
+    /**
+     * @return mixed
+     */
+    public function getIndexColumns();
 
     /**
      * 设置索引备注
      * @param string $comment
      * @return IndexInterface
      */
-    function setIndexComment(string $comment);
+    public function setIndexComment(string $comment);
+
+    /**
+     * @return mixed
+     */
+    public function getIndexComment();
 }

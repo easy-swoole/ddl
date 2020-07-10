@@ -2,13 +2,9 @@
 
 namespace EasySwoole\DDL\Blueprint\Alter;
 
-use EasySwoole\DDL\Enum\Alter;
-use \EasySwoole\DDL\Enum\Foreign as ForeignType;
-use InvalidArgumentException;
-
 /**
  * 外键构造器
- * Class Foreign
+ * Class ForeignModify
  * @package EasySwoole\DDL\Blueprint\Alter
  */
 class ForeignModify
@@ -24,7 +20,7 @@ class ForeignModify
      * @param string $foreignColumn
      * @return ForeignAdd
      */
-    function foreign(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    public function foreign(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
     {
         $this->foreignAddObj = new ForeignAdd($foreignName, $localColumn, $relatedTableName, $foreignColumn);
         return $this->foreignAddObj;
@@ -38,7 +34,7 @@ class ForeignModify
      */
     public function onDelete(string $option): ForeignModify
     {
-        $this->foreignAddObj->onDelete($option);
+        $this->foreignAddObj->setOnDelete($option);
         return $this;
     }
 
@@ -50,7 +46,7 @@ class ForeignModify
      */
     public function onUpdate(string $option): ForeignModify
     {
-        $this->foreignAddObj->onUpdate($option);
+        $this->foreignAddObj->setOnUpdate($option);
         return $this;
     }
 
@@ -59,7 +55,7 @@ class ForeignModify
      * 带有下划线的方法请不要自行调用
      * @return string
      */
-    function __createDDL()
+    public function __createDDL()
     {
         return $this->foreignAddObj->__createDDL();
     }
@@ -68,7 +64,7 @@ class ForeignModify
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

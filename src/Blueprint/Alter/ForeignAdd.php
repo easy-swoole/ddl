@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 /**
  * 外键构造器
- * Class Foreign
+ * Class ForeignAdd
  * @package EasySwoole\DDL\Blueprint\Alter
  */
 class ForeignAdd
@@ -20,7 +20,7 @@ class ForeignAdd
     protected $onDelete;            // 主表删除操作从表动作
     protected $onUpdate;            // 主表更新操作从表动作
 
-    protected $ForeignOption = [
+    protected $foreignOption = [
         ForeignType::CASCADE,
         ForeignType::NO_ACTION,
         ForeignType::RESTRICT,
@@ -139,7 +139,7 @@ class ForeignAdd
     public function setOnDelete(string $option): ForeignAdd
     {
         $option = trim($option);
-        if (!in_array($option, $this->ForeignOption)) {
+        if (!in_array($option, $this->foreignOption)) {
             throw new InvalidArgumentException('on delete option is invalid');
         }
         $this->onDelete = $option;
@@ -163,7 +163,7 @@ class ForeignAdd
     public function setOnUpdate(string $option): ForeignAdd
     {
         $option = trim($option);
-        if (!in_array($option, $this->ForeignOption)) {
+        if (!in_array($option, $this->foreignOption)) {
             throw new InvalidArgumentException('on update option is invalid');
         }
         $this->onUpdate = $option;
@@ -189,11 +189,11 @@ class ForeignAdd
             array_filter(
                 [
                     Alter::ADD,
-                    $this->foreignName ? "CONSTRAINT `{$this->foreignName}`" : null,
-                    "FOREIGN KEY (`{$this->localColumn}`)",
-                    "REFERENCES `{$this->relatedTableName}` (`{$this->foreignColumn}`)",
-                    $this->onDelete ? "ON DELETE {$this->onDelete}" : null,
-                    $this->onUpdate ? "ON UPDATE {$this->onUpdate}" : null,
+                    $this->getForeignName() ? "CONSTRAINT `{$this->getForeignName()}`" : null,
+                    "FOREIGN KEY (`{$this->getLocalColumn()}`)",
+                    "REFERENCES `{$this->getRelatedTableName()}` (`{$this->getForeignColumn()}`)",
+                    $this->getOnDelete() ? "ON DELETE {$this->getOnDelete()}" : null,
+                    $this->getOnUpdate() ? "ON UPDATE {$this->getOnUpdate()}" : null,
                 ]
             )
         );

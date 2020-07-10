@@ -99,8 +99,7 @@ abstract class IndexAbstract implements IndexInterface
     }
 
     /**
-     * 生成索引DDL结构
-     * 带有下划线的方法请不要自行调用
+     * 构造器最终生成方法
      * @return string
      */
     abstract public function __createDDL();

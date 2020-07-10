@@ -25,8 +25,8 @@ class Table
     protected $table;
     protected $renameTable;
     protected $comment;
-    protected $engine;// = Engines::INNODB
-    protected $charset;// = Character::UTF8_GENERAL_CI
+    protected $engine;
+    protected $charset;
     // 额外选项
     protected $autoIncrement;     // 自增起始值
 
@@ -39,7 +39,7 @@ class Table
      * Table constructor.
      * @param $tableName
      */
-    function __construct($tableName)
+    public function __construct($tableName)
     {
         $this->settableName($tableName);
     }
@@ -51,7 +51,7 @@ class Table
      * 新增字段
      * @return ColumnAdd
      */
-    function addColumn(): ColumnAdd
+    public function addColumn(): ColumnAdd
     {
         $this->columns[Alter::ADD][] = $columnAdd = new ColumnAdd();
         return $columnAdd;
@@ -61,7 +61,7 @@ class Table
      * 修改字段属性
      * @return ColumnModify
      */
-    function modifyColumn(): ColumnModify
+    public function modifyColumn(): ColumnModify
     {
         $this->columns[Alter::MODIFY][] = $columnModify = new ColumnModify();
         return $columnModify;
@@ -72,7 +72,7 @@ class Table
      * @param string $column
      * @return ColumnChange
      */
-    function changeColumn(string $column): ColumnChange
+    public function changeColumn(string $column): ColumnChange
     {
         $this->columns[Alter::CHANGE][] = $columnChange = new ColumnChange($column);
         return $columnChange;
@@ -83,7 +83,7 @@ class Table
      * @param string $column
      * @return ColumnDrop
      */
-    function dropColumn(string $column): ColumnDrop
+    public function dropColumn(string $column): ColumnDrop
     {
         $this->columns[Alter::DROP][] = $columnDrop = new ColumnDrop($column);
         return $columnDrop;
@@ -170,7 +170,7 @@ class Table
      * @param string $name
      * @return Table
      */
-    function setTableName(string $name): Table
+    public function setTableName(string $name): Table
     {
         $name = trim($name);
         if (empty($name)) {
@@ -193,7 +193,7 @@ class Table
      * @param string|null $name
      * @return $this
      */
-    function setRenameTable(?string $name = null): Table
+    public function setRenameTable(?string $name = null): Table
     {
         $this->renameTable = trim($name) ?: null;
         return $this;
@@ -202,7 +202,7 @@ class Table
     /**
      * @return mixed
      */
-    function getRenameTable()
+    public function getRenameTable()
     {
         return $this->renameTable;
     }
@@ -212,7 +212,7 @@ class Table
      * @param string $engine
      * @return Table
      */
-    function setTableEngine(string $engine): Table
+    public function setTableEngine(string $engine): Table
     {
         $engine = trim($engine);
         if (!Engines::isValidValue($engine)) {
@@ -225,7 +225,7 @@ class Table
     /**
      * @return mixed
      */
-    function getTableEngine()
+    public function getTableEngine()
     {
         return $this->engine;
     }
@@ -235,7 +235,7 @@ class Table
      * @param string $comment
      * @return Table
      */
-    function setTableComment(string $comment): Table
+    public function setTableComment(string $comment): Table
     {
         $this->comment = $comment;
         return $this;
@@ -244,7 +244,7 @@ class Table
     /**
      * @return mixed
      */
-    function getTableComment()
+    public function getTableComment()
     {
         return $this->comment;
     }
@@ -254,7 +254,7 @@ class Table
      * @param string $charset
      * @return Table
      */
-    function setTableCharset(string $charset): Table
+    public function setTableCharset(string $charset): Table
     {
         $charset = trim($charset);
         if (!Character::isValidValue($charset)) {
@@ -267,7 +267,7 @@ class Table
     /**
      * @return mixed
      */
-    function getTableCharset()
+    public function getTableCharset()
     {
         return $this->charset;
     }
@@ -277,7 +277,7 @@ class Table
      * @param int $startIncrement
      * @return Table
      */
-    function setTableAutoIncrement(int $startIncrement)
+    public function setTableAutoIncrement(int $startIncrement)
     {
         $this->autoIncrement = $startIncrement;
         return $this;
@@ -286,13 +286,79 @@ class Table
     /**
      * @return mixed
      */
-    function getTableAutoIncrement()
+    public function getTableAutoIncrement()
     {
         return $this->autoIncrement;
     }
 
+    /**
+     * 处理表格字段定义
+     * @param $tableName
+     * @return array
+     */
+    private function parseColumns($tableName)
+    {
+        // 表格字段定义
+        $tmpColumnDefinitions = $columnDefinitions = [];
+        foreach ($this->columns as $operate => $columnObjs) {
+            /** @var ColumnInterface $columnObj */
+            foreach ($columnObjs as $columnObj) {
+                $tmpColumnDefinitions[$operate][$columnObj->getColumnName()] = "ALTER TABLE {$tableName} " . (string)$columnObj;
+            }
+        }
+        //避免一些先新增，后删除的操作报错
+        return $columnDefinitions = array_merge(
+            isset($tmpColumnDefinitions[Alter::DROP]) ? array_values((array)$tmpColumnDefinitions[Alter::DROP]) : [],
+            isset($tmpColumnDefinitions[Alter::CHANGE]) ? array_values((array)$tmpColumnDefinitions[Alter::CHANGE]) : [],
+            isset($tmpColumnDefinitions[Alter::MODIFY]) ? array_values((array)$tmpColumnDefinitions[Alter::MODIFY]) : [],
+            isset($tmpColumnDefinitions[Alter::ADD]) ? array_values((array)$tmpColumnDefinitions[Alter::ADD]) : []
+        );
+    }
+
+    /**
+     * 处理表格索引定义
+     * @param $tableName
+     * @return array
+     */
+    private function parseIndexes($tableName)
+    {
+        // 表格索引定义
+        $tmpIndexDefinitions = $indexDefinitions = [];
+        foreach ($this->indexes as $operate => $indexObjs) {
+            foreach ($indexObjs as $indexObj) {
+                $tmpIndexDefinitions[$operate][] = "ALTER TABLE {$tableName} " . (string)$indexObj;
+            }
+        }
+        //避免一些先新增，后删除的操作报错
+        return $indexDefinitions = array_merge(
+            isset($tmpIndexDefinitions[Alter::DROP]) ? array_values((array)$tmpIndexDefinitions[Alter::DROP]) : [],
+            isset($tmpIndexDefinitions[Alter::ADD]) ? array_values((array)$tmpIndexDefinitions[Alter::ADD]) : []
+        );
+    }
+
+    /**
+     * 处理表格外键定义
+     * @param $tableName
+     * @return array
+     */
+    private function parseForeignKeys($tableName)
+    {
+        // 表格外键定义
+        $tmpForeignDefinitions = $foreignDefinitions = [];
+        foreach ($this->foreignKeys as $operate => $foreignObjs) {
+            foreach ($foreignObjs as $foreignObj) {
+                $tmpForeignDefinitions[$operate][] = "ALTER TABLE {$tableName} " . (string)$foreignObj;
+            }
+        }
+        //避免一些先新增，后删除的操作报错
+        return $foreignDefinitions = array_merge(
+            isset($tmpForeignDefinitions[Alter::DROP]) ? array_values((array)$tmpForeignDefinitions[Alter::DROP]) : [],
+            isset($tmpForeignDefinitions[Alter::ADD]) ? array_values((array)$tmpForeignDefinitions[Alter::ADD]) : []
+        );
+    }
+
     // 生成表结构 带有下划线的方法请不要自行调用
-    function __createDDL()
+    public function __createDDL()
     {
         // 表名称定义
         $tableName = "`{$this->getTableName()}`"; // 安全起见引号包裹
@@ -303,47 +369,14 @@ class Table
             $tableName      = "`{$this->getRenameTable()}`";
         }
 
-        // 表格字段定义
-        $tmpColumnDefinitions = $columnDefinitions = [];
-        foreach ($this->columns as $operate => $columnObjs) {
-            /** @var ColumnInterface $columnObj */
-            foreach ($columnObjs as $columnObj) {
-                $tmpColumnDefinitions[$operate][$columnObj->getColumnName()] = "ALTER TABLE {$tableName} " . (string)$columnObj;
-            }
-        }
-        //避免一些先新增，后删除的操作报错
-        $columnDefinitions = array_merge(
-            isset($tmpColumnDefinitions[Alter::DROP]) ? array_values((array)$tmpColumnDefinitions[Alter::DROP]) : [],
-            isset($tmpColumnDefinitions[Alter::CHANGE]) ? array_values((array)$tmpColumnDefinitions[Alter::CHANGE]) : [],
-            isset($tmpColumnDefinitions[Alter::MODIFY]) ? array_values((array)$tmpColumnDefinitions[Alter::MODIFY]) : [],
-            isset($tmpColumnDefinitions[Alter::ADD]) ? array_values((array)$tmpColumnDefinitions[Alter::ADD]) : []
-        );
+        // 处理字段
+        $columnDefinitions = $this->parseColumns($tableName);
 
-        // 表格索引定义
-        $tmpIndexDefinitions = $indexDefinitions = [];
-        foreach ($this->indexes as $operate => $indexObjs) {
-            foreach ($indexObjs as $indexObj) {
-                $tmpIndexDefinitions[$operate][] = "ALTER TABLE {$tableName} " . (string)$indexObj;
-            }
-        }
-        //避免一些先新增，后删除的操作报错
-        $indexDefinitions = array_merge(
-            isset($tmpIndexDefinitions[Alter::DROP]) ? array_values((array)$tmpIndexDefinitions[Alter::DROP]) : [],
-            isset($tmpIndexDefinitions[Alter::ADD]) ? array_values((array)$tmpIndexDefinitions[Alter::ADD]) : []
-        );
+        // 处理索引
+        $indexDefinitions = $this->parseIndexes($tableName);
 
-        // 表格外键定义
-        $tmpForeignDefinitions = $foreignDefinitions = [];
-        foreach ($this->foreignKeys as $operate => $foreignObjs) {
-            foreach ($foreignObjs as $foreignObj) {
-                $tmpForeignDefinitions[$operate][] = "ALTER TABLE {$tableName} " . (string)$foreignObj;
-            }
-        }
-        //避免一些先新增，后删除的操作报错
-        $foreignDefinitions = array_merge(
-            isset($tmpForeignDefinitions[Alter::DROP]) ? array_values((array)$tmpForeignDefinitions[Alter::DROP]) : [],
-            isset($tmpForeignDefinitions[Alter::ADD]) ? array_values((array)$tmpForeignDefinitions[Alter::ADD]) : []
-        );
+        // 处理外键
+        $foreignDefinitions = $this->parseForeignKeys($tableName);
 
         // 表格属性定义
         $tableOptions = array_filter(
@@ -376,7 +409,7 @@ class Table
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

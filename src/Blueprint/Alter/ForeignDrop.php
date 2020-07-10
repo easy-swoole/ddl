@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 /**
  * 外键构造器
- * Class Foreign
+ * Class ForeignDrop
  * @package EasySwoole\DDL\Blueprint\Alter
  */
 class ForeignDrop
@@ -19,7 +19,7 @@ class ForeignDrop
      * Foreign constructor.
      * @param string $foreignName
      */
-    function __construct(string $foreignName)
+    public function __construct(string $foreignName)
     {
         $this->setForeignName($foreignName);
     }
@@ -52,7 +52,7 @@ class ForeignDrop
      * 带有下划线的方法请不要自行调用
      * @return string
      */
-    function __createDDL()
+    public function __createDDL()
     {
         return implode(' ',
             array_filter(
@@ -68,7 +68,7 @@ class ForeignDrop
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

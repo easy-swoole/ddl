@@ -11,7 +11,7 @@ use EasySwoole\DDL\Filter\FilterZerofill;
 
 /**
  * 修改表字段构造器
- * Class Column
+ * Class ColumnModify
  * @package EasySwoole\DDL\Blueprint\Alter
  */
 class ColumnModify extends ColumnAbstract
@@ -22,7 +22,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $limit INT 4Bytes(2^31)
      * @return ColumnModify
      */
-    function int(string $name, int $limit = null): ColumnModify
+    public function int(string $name, int $limit = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::INT)->setColumnLimit($limit);
     }
@@ -33,7 +33,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $limit BIGINT 8Bytes(2^63)
      * @return ColumnModify
      */
-    function bigint(string $name, int $limit = null): ColumnModify
+    public function bigint(string $name, int $limit = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::BIGINT)->setColumnLimit($limit);
     }
@@ -44,7 +44,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $limit TINYINT 1Bytes(2^7)
      * @return ColumnModify
      */
-    function tinyint(string $name, int $limit = null): ColumnModify
+    public function tinyint(string $name, int $limit = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYINT)->setColumnLimit($limit);
     }
@@ -55,7 +55,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $limit TINYINT 2Bytes(2^15)
      * @return ColumnModify
      */
-    function smallint(string $name, int $limit = null): ColumnModify
+    public function smallint(string $name, int $limit = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::SMALLINT)->setColumnLimit($limit);
     }
@@ -66,7 +66,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $limit MEDIUMINT 3Bytes(2^23)
      * @return ColumnModify
      */
-    function mediumInt(string $name, int $limit = null): ColumnModify
+    public function mediumInt(string $name, int $limit = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMINT)->setColumnLimit($limit);
     }
@@ -79,7 +79,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $digits 小数点部分的精度(可空)
      * @return ColumnModify
      */
-    function float(string $name, int $precision = null, int $digits = null): ColumnModify
+    public function float(string $name, int $precision = null, int $digits = null): ColumnModify
     {
         $this->setColumnName($name)->setColumnType(DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -97,7 +97,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $digits 小数点部分的精度(可空)
      * @return ColumnModify
      */
-    function double(string $name, int $precision = null, int $digits = null): ColumnModify
+    public function double(string $name, int $precision = null, int $digits = null): ColumnModify
     {
         $this->setColumnName($name)->setColumnType(DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -117,7 +117,7 @@ class ColumnModify extends ColumnAbstract
      * @param int $digits 小数点部分的精度
      * @return ColumnModify
      */
-    function decimal(string $name, int $precision = 10, int $digits = 0): ColumnModify
+    public function decimal(string $name, int $precision = 10, int $digits = 0): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::DECIMAL)->setColumnLimit([$precision, $digits]);
     }
@@ -127,7 +127,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function date(string $name): ColumnModify
+    public function date(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::DATE);
     }
@@ -137,7 +137,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function year(string $name): ColumnModify
+    public function year(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::YEAR);
     }
@@ -148,7 +148,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnModify
      */
-    function time(string $name, int $fsp = null): ColumnModify
+    public function time(string $name, int $fsp = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::TIME)->setColumnLimit($fsp);
     }
@@ -159,7 +159,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnModify
      */
-    function datetime(string $name, int $fsp = null): ColumnModify
+    public function datetime(string $name, int $fsp = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::DATETIME)->setColumnLimit($fsp);
     }
@@ -170,7 +170,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnModify
      */
-    function timestamp(string $name, ?int $fsp = null): ColumnModify
+    public function timestamp(string $name, ?int $fsp = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::TIMESTAMP)->setColumnLimit($fsp);
     }
@@ -181,7 +181,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $limit
      * @return ColumnModify
      */
-    function char(string $name, ?int $limit = null): ColumnModify
+    public function char(string $name, ?int $limit = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::CHAR)->setColumnLimit($limit);
     }
@@ -192,7 +192,7 @@ class ColumnModify extends ColumnAbstract
      * @param int|null $limit
      * @return ColumnModify
      */
-    function varchar(string $name, int $limit = null): ColumnModify
+    public function varchar(string $name, int $limit = null): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::VARCHAR)->setColumnLimit($limit);
     }
@@ -202,7 +202,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function text(string $name): ColumnModify
+    public function text(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::TEXT);
     }
@@ -212,7 +212,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function tinytext(string $name): ColumnModify
+    public function tinytext(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYTEXT);
     }
@@ -222,7 +222,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function longtext(string $name): ColumnModify
+    public function longtext(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::LONGTEXT);
     }
@@ -232,7 +232,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function mediumtext(string $name): ColumnModify
+    public function mediumtext(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMTEXT);
     }
@@ -242,7 +242,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function blob(string $name): ColumnModify
+    public function blob(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::BLOB);
     }
@@ -252,7 +252,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function longblob(string $name): ColumnModify
+    public function longblob(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::LONGTEXT);
     }
@@ -262,7 +262,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function tinyblob(string $name): ColumnModify
+    public function tinyblob(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYBLOB);
     }
@@ -272,7 +272,7 @@ class ColumnModify extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnModify
      */
-    function mediumblob(string $name): ColumnModify
+    public function mediumblob(string $name): ColumnModify
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMBLOB);
     }
@@ -342,7 +342,7 @@ class ColumnModify extends ColumnAbstract
      * 带下划线的方法请不要外部调用
      * @return string
      */
-    function __createDDL(): string
+    public function __createDDL(): string
     {
         FilterLimit::run($this);//检测limit是否合法
         FilterUnsigned::run($this); //检测无符号类型

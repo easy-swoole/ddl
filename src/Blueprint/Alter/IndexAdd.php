@@ -4,7 +4,7 @@ namespace EasySwoole\DDL\Blueprint\Alter;
 
 use EasySwoole\DDL\Blueprint\AbstractInterface\IndexAbstract;
 use EasySwoole\DDL\Enum\Alter;
-use \EasySwoole\DDL\Enum\Index as IndexType;
+use EasySwoole\DDL\Enum\Index as IndexType;
 
 /**
  * 索引构造器
@@ -19,7 +19,7 @@ class IndexAdd extends IndexAbstract
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return IndexAdd
      */
-    function normal(string $name, $columns): IndexAdd
+    public function normal(string $name, $columns): IndexAdd
     {
         $this->setIndexName($name);
         $this->setIndexType(IndexType::NORMAL);
@@ -34,7 +34,7 @@ class IndexAdd extends IndexAbstract
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return IndexAdd
      */
-    function unique(string $name, $columns): IndexAdd
+    public function unique(string $name, $columns): IndexAdd
     {
         $this->setIndexName($name);
         $this->setIndexType(IndexType::UNIQUE);
@@ -49,7 +49,7 @@ class IndexAdd extends IndexAbstract
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return IndexAdd
      */
-    function primary(string $name, $columns): IndexAdd
+    public function primary(string $name, $columns): IndexAdd
     {
         $this->setIndexName($name);
         $this->setIndexType(IndexType::PRIMARY);
@@ -64,7 +64,7 @@ class IndexAdd extends IndexAbstract
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return IndexAdd
      */
-    function fulltext(string $name, $columns): IndexAdd
+    public function fulltext(string $name, $columns): IndexAdd
     {
         $this->setIndexName($name);
         $this->setIndexType(IndexType::FULLTEXT);
@@ -76,7 +76,7 @@ class IndexAdd extends IndexAbstract
      * 组装索引字段名
      * @return string
      */
-    function parseIndexColumns()
+    private function parseIndexColumns()
     {
         $columnDDLs   = [];
         $indexColumns = $this->getIndexColumns();

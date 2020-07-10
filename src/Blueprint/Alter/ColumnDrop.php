@@ -7,7 +7,7 @@ use InvalidArgumentException;
 
 /**
  * 修改表字段构造器
- * Class Column
+ * Class ColumnDrop
  * @package EasySwoole\DDL\Blueprint\Alter
  */
 class ColumnDrop
@@ -18,7 +18,7 @@ class ColumnDrop
      * Column constructor.
      * @param string $columnName 列的名称
      */
-    function __construct(string $columnName)
+    public function __construct(string $columnName)
     {
         $this->setColumnName($columnName);
     }
@@ -28,7 +28,7 @@ class ColumnDrop
      * @param string $name 字段名称
      * @return ColumnDrop
      */
-    function setColumnName(string $name): ColumnDrop
+    public function setColumnName(string $name): ColumnDrop
     {
         $name = trim($name);
         if (empty($name)) {
@@ -51,7 +51,7 @@ class ColumnDrop
      * 带下划线的方法请不要外部调用
      * @return string
      */
-    function __createDDL(): string
+    public function __createDDL(): string
     {
         return implode(' ',
             array_filter(
@@ -67,7 +67,7 @@ class ColumnDrop
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

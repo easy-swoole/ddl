@@ -12,14 +12,14 @@ use InvalidArgumentException;
 
 /**
  * 修改表字段构造器
- * Class Column
+ * Class ColumnChange
  * @package EasySwoole\DDL\Blueprint\Alter
  */
 class ColumnChange extends ColumnAbstract
 {
     protected $oldColumnName;       // 旧字段名称
 
-    function __construct($column)
+    public function __construct($column)
     {
         $this->setOldColumnName($column);
     }
@@ -30,7 +30,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $limit INT 4Bytes(2^31)
      * @return ColumnChange
      */
-    function int(string $name, int $limit = null): ColumnChange
+    public function int(string $name, int $limit = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::INT)->setColumnLimit($limit);
     }
@@ -41,7 +41,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $limit BIGINT 8Bytes(2^63)
      * @return ColumnChange
      */
-    function bigint(string $name, int $limit = null): ColumnChange
+    public function bigint(string $name, int $limit = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::BIGINT)->setColumnLimit($limit);
     }
@@ -52,7 +52,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $limit TINYINT 1Bytes(2^7)
      * @return ColumnChange
      */
-    function tinyint(string $name, int $limit = null): ColumnChange
+    public function tinyint(string $name, int $limit = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYINT)->setColumnLimit($limit);
     }
@@ -63,7 +63,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $limit TINYINT 2Bytes(2^15)
      * @return ColumnChange
      */
-    function smallint(string $name, int $limit = null): ColumnChange
+    public function smallint(string $name, int $limit = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::SMALLINT)->setColumnLimit($limit);
     }
@@ -74,7 +74,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $limit MEDIUMINT 3Bytes(2^23)
      * @return ColumnChange
      */
-    function mediumInt(string $name, int $limit = null): ColumnChange
+    public function mediumInt(string $name, int $limit = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMINT)->setColumnLimit($limit);
     }
@@ -87,7 +87,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $digits 小数点部分的精度(可空)
      * @return ColumnChange
      */
-    function float(string $name, int $precision = null, int $digits = null): ColumnChange
+    public function float(string $name, int $precision = null, int $digits = null): ColumnChange
     {
         $this->setColumnName($name)->setColumnType(DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -105,7 +105,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $digits 小数点部分的精度(可空)
      * @return ColumnChange
      */
-    function double(string $name, int $precision = null, int $digits = null): ColumnChange
+    public function double(string $name, int $precision = null, int $digits = null): ColumnChange
     {
         $this->setColumnName($name)->setColumnType(DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -125,7 +125,7 @@ class ColumnChange extends ColumnAbstract
      * @param int $digits 小数点部分的精度
      * @return ColumnChange
      */
-    function decimal(string $name, int $precision = 10, int $digits = 0): ColumnChange
+    public function decimal(string $name, int $precision = 10, int $digits = 0): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::DECIMAL)->setColumnLimit([$precision, $digits]);
     }
@@ -135,7 +135,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function date(string $name): ColumnChange
+    public function date(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::DATE);
     }
@@ -145,7 +145,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function year(string $name): ColumnChange
+    public function year(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::YEAR);
     }
@@ -156,7 +156,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnChange
      */
-    function time(string $name, int $fsp = null): ColumnChange
+    public function time(string $name, int $fsp = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::TIME)->setColumnLimit($fsp);
     }
@@ -167,7 +167,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnChange
      */
-    function datetime(string $name, int $fsp = null): ColumnChange
+    public function datetime(string $name, int $fsp = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::DATETIME)->setColumnLimit($fsp);
     }
@@ -178,7 +178,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnChange
      */
-    function timestamp(string $name, ?int $fsp = null): ColumnChange
+    public function timestamp(string $name, ?int $fsp = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::TIMESTAMP)->setColumnLimit($fsp);
     }
@@ -189,7 +189,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $limit
      * @return ColumnChange
      */
-    function char(string $name, ?int $limit = null): ColumnChange
+    public function char(string $name, ?int $limit = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::CHAR)->setColumnLimit($limit);
     }
@@ -200,7 +200,7 @@ class ColumnChange extends ColumnAbstract
      * @param int|null $limit
      * @return ColumnChange
      */
-    function varchar(string $name, int $limit = null): ColumnChange
+    public function varchar(string $name, int $limit = null): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::VARCHAR)->setColumnLimit($limit);
     }
@@ -210,7 +210,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function text(string $name): ColumnChange
+    public function text(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::TEXT);
     }
@@ -220,7 +220,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function tinytext(string $name): ColumnChange
+    public function tinytext(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYTEXT);
     }
@@ -230,7 +230,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function longtext(string $name): ColumnChange
+    public function longtext(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::LONGTEXT);
     }
@@ -240,7 +240,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function mediumtext(string $name): ColumnChange
+    public function mediumtext(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMTEXT);
     }
@@ -250,7 +250,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function blob(string $name): ColumnChange
+    public function blob(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::BLOB);
     }
@@ -260,7 +260,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function longblob(string $name): ColumnChange
+    public function longblob(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::LONGTEXT);
     }
@@ -270,7 +270,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function tinyblob(string $name): ColumnChange
+    public function tinyblob(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYBLOB);
     }
@@ -280,7 +280,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function mediumblob(string $name): ColumnChange
+    public function mediumblob(string $name): ColumnChange
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMBLOB);
     }
@@ -291,7 +291,7 @@ class ColumnChange extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnChange
      */
-    function setOldColumnName(string $name): ColumnChange
+    public function setOldColumnName(string $name): ColumnChange
     {
         $name = trim($name);
         if (empty($name)) {
@@ -366,7 +366,7 @@ class ColumnChange extends ColumnAbstract
      * 带下划线的方法请不要外部调用
      * @return string
      */
-    function __createDDL(): string
+    public function __createDDL(): string
     {
         FilterLimit::run($this);//检测limit是否合法
         FilterUnsigned::run($this); //检测无符号类型

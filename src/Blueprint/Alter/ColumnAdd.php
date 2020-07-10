@@ -11,7 +11,7 @@ use EasySwoole\DDL\Filter\FilterZerofill;
 
 /**
  * 修改表字段构造器
- * Class Column
+ * Class ColumnAdd
  * @package EasySwoole\DDL\Blueprint\Alter
  */
 class ColumnAdd extends ColumnAbstract
@@ -22,7 +22,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $limit INT 4Bytes(2^31)
      * @return ColumnAdd
      */
-    function int(string $name, int $limit = null): ColumnAdd
+    public function int(string $name, int $limit = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::INT)->setColumnLimit($limit);
     }
@@ -33,7 +33,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $limit BIGINT 8Bytes(2^63)
      * @return ColumnAdd
      */
-    function bigint(string $name, int $limit = null): ColumnAdd
+    public function bigint(string $name, int $limit = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::BIGINT)->setColumnLimit($limit);
     }
@@ -44,7 +44,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $limit TINYINT 1Bytes(2^7)
      * @return ColumnAdd
      */
-    function tinyint(string $name, int $limit = null): ColumnAdd
+    public function tinyint(string $name, int $limit = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYINT)->setColumnLimit($limit);
     }
@@ -55,7 +55,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $limit TINYINT 2Bytes(2^15)
      * @return ColumnAdd
      */
-    function smallint(string $name, int $limit = null): ColumnAdd
+    public function smallint(string $name, int $limit = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::SMALLINT)->setColumnLimit($limit);
     }
@@ -66,7 +66,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $limit MEDIUMINT 3Bytes(2^23)
      * @return ColumnAdd
      */
-    function mediumInt(string $name, int $limit = null): ColumnAdd
+    public function mediumInt(string $name, int $limit = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMINT)->setColumnLimit($limit);
     }
@@ -79,7 +79,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $digits 小数点部分的精度(可空)
      * @return ColumnAdd
      */
-    function float(string $name, int $precision = null, int $digits = null): ColumnAdd
+    public function float(string $name, int $precision = null, int $digits = null): ColumnAdd
     {
         $this->setColumnName($name)->setColumnType(DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -97,7 +97,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $digits 小数点部分的精度(可空)
      * @return ColumnAdd
      */
-    function double(string $name, int $precision = null, int $digits = null): ColumnAdd
+    public function double(string $name, int $precision = null, int $digits = null): ColumnAdd
     {
         $this->setColumnName($name)->setColumnType(DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -117,7 +117,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int $digits 小数点部分的精度
      * @return ColumnAdd
      */
-    function decimal(string $name, int $precision = 10, int $digits = 0): ColumnAdd
+    public function decimal(string $name, int $precision = 10, int $digits = 0): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::DECIMAL)->setColumnLimit([$precision, $digits]);
     }
@@ -127,7 +127,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function date(string $name): ColumnAdd
+    public function date(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::DATE);
     }
@@ -137,7 +137,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function year(string $name): ColumnAdd
+    public function year(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::YEAR);
     }
@@ -148,7 +148,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnAdd
      */
-    function time(string $name, int $fsp = null): ColumnAdd
+    public function time(string $name, int $fsp = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::TIME)->setColumnLimit($fsp);
     }
@@ -159,7 +159,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnAdd
      */
-    function datetime(string $name, int $fsp = null): ColumnAdd
+    public function datetime(string $name, int $fsp = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::DATETIME)->setColumnLimit($fsp);
     }
@@ -170,7 +170,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return ColumnAdd
      */
-    function timestamp(string $name, ?int $fsp = null): ColumnAdd
+    public function timestamp(string $name, ?int $fsp = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::TIMESTAMP)->setColumnLimit($fsp);
     }
@@ -181,7 +181,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $limit
      * @return ColumnAdd
      */
-    function char(string $name, ?int $limit = null): ColumnAdd
+    public function char(string $name, ?int $limit = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::CHAR)->setColumnLimit($limit);
     }
@@ -192,7 +192,7 @@ class ColumnAdd extends ColumnAbstract
      * @param int|null $limit
      * @return ColumnAdd
      */
-    function varchar(string $name, int $limit = null): ColumnAdd
+    public function varchar(string $name, int $limit = null): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::VARCHAR)->setColumnLimit($limit);
     }
@@ -202,7 +202,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function text(string $name): ColumnAdd
+    public function text(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::TEXT);
     }
@@ -212,7 +212,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function tinytext(string $name): ColumnAdd
+    public function tinytext(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYTEXT);
     }
@@ -222,7 +222,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function longtext(string $name): ColumnAdd
+    public function longtext(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::LONGTEXT);
     }
@@ -232,7 +232,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function mediumtext(string $name): ColumnAdd
+    public function mediumtext(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMTEXT);
     }
@@ -242,7 +242,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function blob(string $name): ColumnAdd
+    public function blob(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::BLOB);
     }
@@ -252,7 +252,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function longblob(string $name): ColumnAdd
+    public function longblob(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::LONGTEXT);
     }
@@ -262,7 +262,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function tinyblob(string $name): ColumnAdd
+    public function tinyblob(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::TINYBLOB);
     }
@@ -272,7 +272,7 @@ class ColumnAdd extends ColumnAbstract
      * @param string $name 字段名称
      * @return ColumnAdd
      */
-    function mediumblob(string $name): ColumnAdd
+    public function mediumblob(string $name): ColumnAdd
     {
         return $this->setColumnName($name)->setColumnType(DataType::MEDIUMBLOB);
     }
@@ -342,7 +342,7 @@ class ColumnAdd extends ColumnAbstract
      * 带下划线的方法请不要外部调用
      * @return string
      */
-    function __createDDL(): string
+    public function __createDDL(): string
     {
         FilterLimit::run($this);//检测limit是否合法
         FilterUnsigned::run($this); //检测无符号类型

@@ -13,9 +13,6 @@ use InvalidArgumentException;
 class IndexDrop
 {
     protected $indexName;     // 索引名称
-    protected $indexType;     // 索引类型 NORMAL PRI UNI FULLTEXT
-    protected $indexColumns;  // 被索引的列 字符串或数组(多个列)
-    protected $indexComment;  // 索引注释
 
     /**
      * Index constructor.
