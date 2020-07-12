@@ -33,7 +33,7 @@ class Foreign
      * @param string $relatedTableName
      * @param string $foreignColumn
      */
-    function __construct(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    public function __construct(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
     {
         $this->setForeignName($foreignName);
         $this->setLocalColumn($localColumn);
@@ -46,10 +46,18 @@ class Foreign
      * @param string|null $foreignName
      * @return Foreign
      */
-    private function setForeignName(?string $foreignName = null): Foreign
+    public function setForeignName(?string $foreignName = null): Foreign
     {
         $this->foreignName = is_string($foreignName) ? trim($foreignName) : null;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getForeignName()
+    {
+        return $this->foreignName;
     }
 
     /**
@@ -57,7 +65,7 @@ class Foreign
      * @param string $localColumn
      * @return Foreign
      */
-    private function setLocalColumn(string $localColumn): Foreign
+    public function setLocalColumn(string $localColumn): Foreign
     {
         $localColumn = trim($localColumn);
         if (empty($localColumn)) {
@@ -68,11 +76,19 @@ class Foreign
     }
 
     /**
+     * @return mixed
+     */
+    public function getLocalColumn()
+    {
+        return $this->localColumn;
+    }
+
+    /**
      * 设置主表表名
      * @param string $relatedTableName
      * @return Foreign
      */
-    private function setRelatedTableName(string $relatedTableName): Foreign
+    public function setRelatedTableName(string $relatedTableName): Foreign
     {
         $relatedTableName = trim($relatedTableName);
         if (empty($relatedTableName)) {
@@ -83,11 +99,19 @@ class Foreign
     }
 
     /**
+     * @return mixed
+     */
+    public function getRelatedTableName()
+    {
+        return $this->relatedTableName;
+    }
+
+    /**
      * 设置主表字段
      * @param string $foreignColumn
      * @return Foreign
      */
-    private function setForeignColumn(string $foreignColumn): Foreign
+    public function setForeignColumn(string $foreignColumn): Foreign
     {
         $foreignColumn = trim($foreignColumn);
         if (empty($foreignColumn)) {
@@ -98,12 +122,20 @@ class Foreign
     }
 
     /**
+     * @return mixed
+     */
+    public function getForeignColumn()
+    {
+        return $this->foreignColumn;
+    }
+
+    /**
      * 主表删除操作从表动作
      * \EasySwoole\DDL\Enum\Foreign
      * @param string $option
      * @return Foreign
      */
-    function onDelete(string $option)
+    public function setOnDelete(string $option)
     {
         $option = trim($option);
         if (!in_array($option, $this->ForeignOption)) {
@@ -114,12 +146,20 @@ class Foreign
     }
 
     /**
+     * @return mixed
+     */
+    public function getOnDelete()
+    {
+        return $this->onDelete;
+    }
+
+    /**
      * 主表更新操作从表动作
      * \EasySwoole\DDL\Enum\Foreign
      * @param string $option
      * @return Foreign
      */
-    function onUpdate(string $option)
+    public function setOnUpdate(string $option)
     {
         $option = trim($option);
         if (!in_array($option, $this->ForeignOption)) {
@@ -130,20 +170,28 @@ class Foreign
     }
 
     /**
+     * @return mixed
+     */
+    public function getOnUpdate()
+    {
+        return $this->onUpdate;
+    }
+
+    /**
      * 生成索引DDL结构
      * 带有下划线的方法请不要自行调用
      * @return string
      */
-    function __createDDL()
+    public function __createDDL()
     {
         return implode(' ',
             array_filter(
                 [
-                    $this->foreignName ? "CONSTRAINT `{$this->foreignName}`" : null,
-                    "FOREIGN KEY (`{$this->localColumn}`)",
-                    "REFERENCES `{$this->relatedTableName}` (`{$this->foreignColumn}`)",
-                    $this->onDelete ? "ON DELETE {$this->onDelete}" : null,
-                    $this->onUpdate ? "ON UPDATE {$this->onUpdate}" : null,
+                    $this->getForeignName() ? "CONSTRAINT `{$this->getForeignName()}`" : null,
+                    "FOREIGN KEY (`{$this->getLocalColumn()}`)",
+                    "REFERENCES `{$this->getRelatedTableName()}` (`{$this->getForeignColumn()}`)",
+                    $this->getOnDelete() ? "ON DELETE {$this->getOnDelete()}" : null,
+                    $this->getOnUpdate() ? "ON UPDATE {$this->getOnUpdate()}" : null,
                 ]
             )
         );
@@ -153,7 +201,7 @@ class Foreign
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

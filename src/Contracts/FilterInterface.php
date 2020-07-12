@@ -8,8 +8,7 @@
 
 namespace EasySwoole\DDL\Contracts;
 
-
-use EasySwoole\DDL\Blueprint\ColumnInterface;
+use EasySwoole\DDL\Blueprint\AbstractInterface\ColumnInterface;
 
 interface FilterInterface
 {

@@ -11,7 +11,7 @@ use EasySwoole\DDL\Enum\Index as IndexType;
  * 创建表结构描述
  * 暂只支持创建表 CREATE 结构
  * Class Table
- * @package EasySwoole\Mysqli\DDLBuilder\Blueprints
+ * @package EasySwoole\DDL\Blueprint\Create
  */
 class Table
 {
@@ -35,7 +35,7 @@ class Table
      * Table constructor.
      * @param $tableName
      */
-    function __construct($tableName)
+    public function __construct($tableName)
     {
         $this->setTableName($tableName);
     }
@@ -48,7 +48,7 @@ class Table
      * @param null|integer $limit INT 4Bytes(2^31)
      * @return mixed
      */
-    function int(string $name, int $limit = null): Column
+    public function int(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::INT);
         $this->columns[$name]->setColumnLimit($limit);
@@ -61,7 +61,7 @@ class Table
      * @param int|null $limit BIGINT 8Bytes(2^63)
      * @return Column
      */
-    function bigint(string $name, int $limit = null): Column
+    public function bigint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::BIGINT);
         $this->columns[$name]->setColumnLimit($limit);
@@ -74,7 +74,7 @@ class Table
      * @param int|null $limit TINYINT 1Bytes(2^7)
      * @return Column
      */
-    function tinyint(string $name, int $limit = null): Column
+    public function tinyint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TINYINT);
         $this->columns[$name]->setColumnLimit($limit);
@@ -87,7 +87,7 @@ class Table
      * @param int|null $limit TINYINT 2Bytes(2^15)
      * @return Column
      */
-    function smallint(string $name, int $limit = null): Column
+    public function smallint(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::SMALLINT);
         $this->columns[$name]->setColumnLimit($limit);
@@ -100,7 +100,7 @@ class Table
      * @param int|null $limit MEDIUMINT 3Bytes(2^23)
      * @return Column
      */
-    function mediumInt(string $name, int $limit = null): Column
+    public function mediumInt(string $name, int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMINT);
         $this->columns[$name]->setColumnLimit($limit);
@@ -115,7 +115,7 @@ class Table
      * @param int|null $digits 小数点部分的精度(可空)
      * @return Column
      */
-    function float(string $name, int $precision = null, int $digits = null): Column
+    public function float(string $name, int $precision = null, int $digits = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::FLOAT);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -133,7 +133,7 @@ class Table
      * @param int|null $digits 小数点部分的精度(可空)
      * @return Column
      */
-    function double(string $name, int $precision = null, int $digits = null): Column
+    public function double(string $name, int $precision = null, int $digits = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DOUBLE);
         if (is_numeric($precision) && is_numeric($digits)) {
@@ -153,7 +153,7 @@ class Table
      * @param int $digits 小数点部分的精度
      * @return Column
      */
-    function decimal(string $name, int $precision = 10, int $digits = 0): Column
+    public function decimal(string $name, int $precision = 10, int $digits = 0): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DECIMAL);
         $this->columns[$name]->setColumnLimit([$precision, $digits]);
@@ -165,7 +165,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function date(string $name): Column
+    public function date(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DATE);
         return $this->columns[$name];
@@ -176,7 +176,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function year(string $name): Column
+    public function year(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::YEAR);
         return $this->columns[$name];
@@ -188,7 +188,7 @@ class Table
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return Column
      */
-    function time(string $name, ?int $fsp = null): Column
+    public function time(string $name, ?int $fsp = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TIME);
         if (is_numeric($fsp)) {
@@ -203,7 +203,7 @@ class Table
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return Column
      */
-    function datetime(string $name, ?int $fsp = null): Column
+    public function datetime(string $name, ?int $fsp = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::DATETIME);
         if (is_numeric($fsp)) {
@@ -218,7 +218,7 @@ class Table
      * @param int|null $fsp 精度分数(详见MYSQL文档)
      * @return Column
      */
-    function timestamp(string $name, ?int $fsp = null): Column
+    public function timestamp(string $name, ?int $fsp = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TIMESTAMP);
         if (is_numeric($fsp)) {
@@ -233,7 +233,7 @@ class Table
      * @param int|null $limit
      * @return Column
      */
-    function char(string $name, ?int $limit = null): Column
+    public function char(string $name, ?int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::CHAR);
         $this->columns[$name]->setColumnLimit($limit);
@@ -246,7 +246,7 @@ class Table
      * @param int|null $limit
      * @return Column
      */
-    function varchar(string $name, ?int $limit = null): Column
+    public function varchar(string $name, ?int $limit = null): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::VARCHAR);
         $this->columns[$name]->setColumnLimit($limit);
@@ -258,7 +258,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function text(string $name): Column
+    public function text(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TEXT);
         return $this->columns[$name];
@@ -269,7 +269,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function tinytext(string $name): Column
+    public function tinytext(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TINYTEXT);
         return $this->columns[$name];
@@ -280,7 +280,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function longtext(string $name): Column
+    public function longtext(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::LONGTEXT);
         return $this->columns[$name];
@@ -291,7 +291,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function mediumtext(string $name): Column
+    public function mediumtext(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMTEXT);
         return $this->columns[$name];
@@ -302,7 +302,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function blob(string $name): Column
+    public function blob(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::BLOB);
         return $this->columns[$name];
@@ -313,7 +313,7 @@ class Table
      * @param string $name 字段名称
      * @return Column
      */
-    function longblob(string $name): Column
+    public function longblob(string $name): Column
     {
         $this->columns[$name] = $this->createColumn($name, DataType::LONGBLOB);
         return $this->columns[$name];
@@ -324,7 +324,7 @@ class Table
      * @param string $name 字段名称
      * @return mixed
      */
-    function tinyblob(string $name)
+    public function tinyblob(string $name)
     {
         $this->columns[$name] = $this->createColumn($name, DataType::TINYBLOB);
         return $this->columns[$name];
@@ -335,7 +335,7 @@ class Table
      * @param string $name 字段名称
      * @return mixed
      */
-    function mediumblob(string $name)
+    public function mediumblob(string $name)
     {
         $this->columns[$name] = $this->createColumn($name, DataType::MEDIUMBLOB);
         return $this->columns[$name];
@@ -350,7 +350,7 @@ class Table
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return Index
      */
-    function normal(string $name, $columns): Index
+    public function normal(string $name, $columns): Index
     {
         $this->indexes[$name] = $this->createIndex($name, IndexType::NORMAL, $columns);
         return $this->indexes[$name];
@@ -363,7 +363,7 @@ class Table
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return Index
      */
-    function unique(string $name, $columns): Index
+    public function unique(string $name, $columns): Index
     {
         $this->indexes[$name] = $this->createIndex($name, IndexType::UNIQUE, $columns);
         return $this->indexes[$name];
@@ -376,7 +376,7 @@ class Table
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return Index
      */
-    function primary(string $name, $columns): Index
+    public function primary(string $name, $columns): Index
     {
         $this->indexes[$name] = $this->createIndex($name, IndexType::PRIMARY, $columns);
         return $this->indexes[$name];
@@ -389,7 +389,7 @@ class Table
      * @param string|array $columns 索引字段(多个字段可以传入数组)
      * @return Index
      */
-    function fulltext(string $name, $columns): Index
+    public function fulltext(string $name, $columns): Index
     {
         $this->indexes[$name] = $this->createIndex($name, IndexType::FULLTEXT, $columns);
         return $this->indexes[$name];
@@ -406,7 +406,7 @@ class Table
      * @param string $foreignColumn 主表字段
      * @return Foreign
      */
-    function foreign(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    public function foreign(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
     {
         $this->indexes[$foreignName] = $this->createForeignKey($foreignName, $localColumn, $relatedTableName, $foreignColumn);
         return $this->indexes[$foreignName];
@@ -421,22 +421,37 @@ class Table
      * @param bool $enable
      * @return Table
      */
-    function setIsTemporary($enable = true): Table
+    public function setIsTemporary($enable = true): Table
     {
         $this->isTemporary = $enable;
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function getIsTemporary()
+    {
+        return $this->isTemporary;
+    }
 
     /**
      * CREATE IF NOT EXISTS
      * @param bool $enable
      * @return Table
      */
-    function setIfNotExists($enable = true): Table
+    public function setIfNotExists($enable = true): Table
     {
         $this->ifNotExists = $enable;
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIfNotExists()
+    {
+        return $this->ifNotExists;
     }
 
     /**
@@ -444,7 +459,7 @@ class Table
      * @param string $name
      * @return Table
      */
-    function setTableName(string $name): Table
+    public function setTableName(string $name): Table
     {
         $name = trim($name);
         if (empty($name)) {
@@ -455,11 +470,19 @@ class Table
     }
 
     /**
+     * @return mixed
+     */
+    public function getTableName()
+    {
+        return $this->table;
+    }
+
+    /**
      * 设置储存引擎
      * @param string $engine
      * @return Table
      */
-    function setTableEngine(string $engine): Table
+    public function setTableEngine(string $engine): Table
     {
         $engine = trim($engine);
         if (!Engines::isValidValue($engine)) {
@@ -470,14 +493,30 @@ class Table
     }
 
     /**
+     * @return string
+     */
+    public function getTableEngine()
+    {
+        return $this->engine;
+    }
+
+    /**
      * 设置表注释
      * @param string $comment
      * @return Table
      */
-    function setTableComment(string $comment): Table
+    public function setTableComment(string $comment): Table
     {
         $this->comment = $comment;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTableComment()
+    {
+        return $this->comment;
     }
 
     /**
@@ -485,7 +524,7 @@ class Table
      * @param string $charset
      * @return Table
      */
-    function setTableCharset(string $charset): Table
+    public function setTableCharset(string $charset): Table
     {
         $charset = trim($charset);
         if (!Character::isValidValue($charset)) {
@@ -496,12 +535,28 @@ class Table
     }
 
     /**
+     * @return string
+     */
+    public function getTableCharset()
+    {
+        return $this->charset;
+    }
+
+    /**
      * 设置起始自增值
      * @param int $startIncrement
      */
-    function setTableAutoIncrement(int $startIncrement)
+    public function setTableAutoIncrement(int $startIncrement)
     {
         $this->autoIncrement = $startIncrement;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTableAutoIncrement()
+    {
+        return $this->autoIncrement;
     }
 
     /**
@@ -544,10 +599,10 @@ class Table
     }
 
     // 生成表结构 带有下划线的方法请不要自行调用
-    function __createDDL()
+    public function __createDDL()
     {
         // 表名称定义
-        $tableName = "`{$this->table}`"; // 安全起见引号包裹
+        $tableName = "`{$this->getTableName()}`"; // 安全起见引号包裹
 
         // 表格字段定义
         $columnDefinitions = [];
@@ -570,19 +625,19 @@ class Table
         // 表格属性定义
         $tableOptions = array_filter(
             [
-                $this->engine ? 'ENGINE = ' . strtoupper($this->engine) : null,
-                $this->autoIncrement ? "AUTO_INCREMENT = " . intval($this->autoIncrement) : null,
-                $this->charset ? "DEFAULT COLLATE = '" . $this->charset . "'" : null,
-                $this->comment ? "COMMENT = '" . addslashes($this->comment) . "'" : null
+                $this->getTableEngine() ? 'ENGINE = ' . strtoupper($this->getTableEngine()) : null,
+                $this->getTableAutoIncrement() ? "AUTO_INCREMENT = " . intval($this->getTableAutoIncrement()) : null,
+                $this->getTableCharset() ? "DEFAULT COLLATE = '" . $this->getTableCharset() . "'" : null,
+                $this->getTableComment() ? "COMMENT = '" . addslashes($this->getTableComment()) . "'" : null
             ]
         );
-        $ifNotExists  = $this->ifNotExists ? 'IF NOT EXISTS ' : '';
+        $ifNotExists  = $this->getIfNotExists() ? 'IF NOT EXISTS' : '';
         // 构建表格DDL
         $createDDL = implode(
                 "\n",
                 array_filter(
                     [
-                        "CREATE TABLE {$ifNotExists}{$tableName} (",
+                        "CREATE TABLE {$ifNotExists} {$tableName} (",
                         implode(",\n",
                             array_merge(
                                 $columnDefinitions,
@@ -603,7 +658,7 @@ class Table
      * 转化为字符串
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return $this->__createDDL();
     }

@@ -9,7 +9,7 @@
 namespace EasySwoole\DDL\Filter\Zerofill;
 
 
-use EasySwoole\DDL\Blueprint\ColumnInterface;
+use EasySwoole\DDL\Blueprint\AbstractInterface\ColumnInterface;
 use EasySwoole\DDL\Contracts\FilterInterface;
 
 class FilterChar implements FilterInterface
