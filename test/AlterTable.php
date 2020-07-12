@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mayn
- * Date: 2019/9/4
- * Time: 23:46
- */
 
 namespace EasySwoole\DDL\Test;
 
