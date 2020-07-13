@@ -293,17 +293,16 @@ class Table
 
     /**
      * 处理表格字段定义
-     * @param $tableName
      * @return array
      */
-    private function parseColumns($tableName)
+    private function parseColumns()
     {
         // 表格字段定义
         $tmpColumnDefinitions = $columnDefinitions = [];
         foreach ($this->columns as $operate => $columnObjs) {
             /** @var ColumnInterface $columnObj */
             foreach ($columnObjs as $columnObj) {
-                $tmpColumnDefinitions[$operate][$columnObj->getColumnName()] = "ALTER TABLE {$tableName} " . (string)$columnObj;
+                $tmpColumnDefinitions[$operate][$columnObj->getColumnName()] = (string)$columnObj;
             }
         }
         //避免一些先新增，后删除的操作报错
@@ -317,16 +316,15 @@ class Table
 
     /**
      * 处理表格索引定义
-     * @param $tableName
      * @return array
      */
-    private function parseIndexes($tableName)
+    private function parseIndexes()
     {
         // 表格索引定义
         $tmpIndexDefinitions = $indexDefinitions = [];
         foreach ($this->indexes as $operate => $indexObjs) {
             foreach ($indexObjs as $indexObj) {
-                $tmpIndexDefinitions[$operate][] = "ALTER TABLE {$tableName} " . (string)$indexObj;
+                $tmpIndexDefinitions[$operate][] = (string)$indexObj;
             }
         }
         //避免一些先新增，后删除的操作报错
@@ -370,12 +368,12 @@ class Table
         }
 
         // 处理字段
-        $columnDefinitions = $this->parseColumns($tableName);
+        $columnDefinitions = $this->parseColumns();
 
         // 处理索引
-        $indexDefinitions = $this->parseIndexes($tableName);
+        $indexDefinitions = $this->parseIndexes();
 
-        // 处理外键
+        // 处理外键 modifyForeign方法重复外键名称会报错，遂生成单独alter
         $foreignDefinitions = $this->parseForeignKeys($tableName);
 
         // 表格属性定义
@@ -388,21 +386,29 @@ class Table
             ]
         );
         // 构建表格DDL
-        return $AlterDDL = implode(";" . PHP_EOL,
-                array_filter(
-                    [
-                        $renameTableSql ? $renameTableSql : null,
-                        $tableOptions ? "ALTER TABLE {$tableName} " . implode(' ', $tableOptions) : null,
-                        implode(";" . PHP_EOL,
-                            array_merge(
-                                $columnDefinitions,
-                                $indexDefinitions,
-                                $foreignDefinitions
-                            )
-                        ),
-                    ]
-                )
-            ) . ';';
+        return $AlterDDL = implode(";\n",
+                array_filter([
+                    $renameTableSql,
+                    "ALTER TABLE {$tableName} \n" . implode(";\n",
+                        array_filter(
+                            [
+                                implode(",\n",
+                                    array_merge(
+                                        $tableOptions,
+                                        $columnDefinitions,
+                                        $indexDefinitions
+                                    )
+                                ),
+                            ]
+                        )
+                    ),
+                    implode(";\n",
+                        array_filter(
+                            $foreignDefinitions
+                        )
+                    )
+                ])
+            ) . ";";
     }
 
     /**

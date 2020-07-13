@@ -82,14 +82,16 @@ CREATE TABLE IF NOT EXISTS `score` (
 ENGINE = INNODB DEFAULT COLLATE = 'utf8mb4_general_ci' COMMENT = '成绩表';
 
 ALTER TABLE `student` RENAME TO `student_info`;
-ALTER TABLE `student_info` COMMENT = '学生信息表';
-ALTER TABLE `student_info` DROP INDEX `ind_stu_name`;
-ALTER TABLE `student_info` ADD INDEX `ind_stu_name` (`stu_name`) COMMENT '学生姓名--普通索引';
+ALTER TABLE `student_info`
+COMMENT = '学生信息表',
+DROP INDEX `ind_stu_name`,
+ADD INDEX `ind_stu_name` (`stu_name`) COMMENT '学生姓名--普通索引';
 
 ALTER TABLE `score` RENAME TO `student_score`;
-ALTER TABLE `student_score` COMMENT = '学生成绩表';
-ALTER TABLE `student_score` DROP INDEX `ind_score`;
-ALTER TABLE `student_score` ADD INDEX `ind_score` (`score`) COMMENT '学生姓名--普通索引';
+ALTER TABLE `student_score`
+COMMENT = '学生成绩表',
+DROP INDEX `ind_score`,
+ADD INDEX `ind_score` (`score`) COMMENT '学生成绩--普通索引';
 ALTER TABLE `student_score` DROP FOREIGN KEY `fk_stu_id`;
 ALTER TABLE `student_score` ADD CONSTRAINT `fk_stu_id` FOREIGN KEY (`stu_id`) REFERENCES `student_info` (`stu_id`);
 
