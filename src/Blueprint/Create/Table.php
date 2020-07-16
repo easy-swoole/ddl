@@ -545,10 +545,12 @@ class Table
     /**
      * 设置起始自增值
      * @param int $startIncrement
+     * @return Table
      */
     public function setTableAutoIncrement(int $startIncrement)
     {
         $this->autoIncrement = $startIncrement;
+        return $this;
     }
 
     /**
