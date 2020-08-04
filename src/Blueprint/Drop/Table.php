@@ -53,7 +53,7 @@ class Table
      * @param bool $ifExists
      * @return Table
      */
-    public function setIfExists(bool $ifExists = false)
+    public function setIfExists(bool $ifExists = true)
     {
         $this->ifExists = (bool)$ifExists;
         return $this;
