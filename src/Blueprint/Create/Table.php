@@ -408,8 +408,8 @@ class Table
      */
     public function foreign(?string $foreignName, $localColumn, string $relatedTableName, $foreignColumn)
     {
-        $this->indexes[$foreignName] = $this->createForeignKey($foreignName, $localColumn, $relatedTableName, $foreignColumn);
-        return $this->indexes[$foreignName];
+        $this->foreignKeys[$foreignName] = $this->createForeignKey($foreignName, $localColumn, $relatedTableName, $foreignColumn);
+        return $this->foreignKeys[$foreignName];
     }
 
 
