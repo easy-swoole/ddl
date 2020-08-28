@@ -401,15 +401,15 @@ class Table
     /**
      * 外键约束
      * @param string|null $foreignName 外键名称(不需要名称也可以传null)
-     * @param string $localColumn 从表字段
+     * @param string|array $localColumn 从表字段
      * @param string $relatedTableName 主表表名
-     * @param string $foreignColumn 主表字段
+     * @param string|array $foreignColumn 主表字段
      * @return Foreign
      */
-    public function foreign(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    public function foreign(?string $foreignName, $localColumn, string $relatedTableName, $foreignColumn)
     {
-        $this->indexes[$foreignName] = $this->createForeignKey($foreignName, $localColumn, $relatedTableName, $foreignColumn);
-        return $this->indexes[$foreignName];
+        $this->foreignKeys[$foreignName] = $this->createForeignKey($foreignName, $localColumn, $relatedTableName, $foreignColumn);
+        return $this->foreignKeys[$foreignName];
     }
 
 
@@ -590,12 +590,12 @@ class Table
      * 创建一个外键对象
      * 继承可以改变返回的类对象以使用自定义对象
      * @param string|null $foreignName
-     * @param string $localColumn
+     * @param string|array $localColumn
      * @param string $relatedTableName
-     * @param string $foreignColumn
+     * @param string|array $foreignColumn
      * @return Foreign
      */
-    protected function createForeignKey(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    protected function createForeignKey(?string $foreignName, $localColumn, string $relatedTableName, $foreignColumn)
     {
         return new Foreign($foreignName, $localColumn, $relatedTableName, $foreignColumn);
     }

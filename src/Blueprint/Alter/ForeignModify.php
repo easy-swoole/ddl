@@ -15,12 +15,12 @@ class ForeignModify
     /**
      * Foreign constructor.
      * @param string|null $foreignName
-     * @param string $localColumn
+     * @param string|array $localColumn
      * @param string $relatedTableName
-     * @param string $foreignColumn
+     * @param string|array $foreignColumn
      * @return ForeignAdd
      */
-    public function foreign(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    public function foreign(?string $foreignName, $localColumn, string $relatedTableName, $foreignColumn)
     {
         $this->foreignAddObj = new ForeignAdd($foreignName, $localColumn, $relatedTableName, $foreignColumn);
         return $this->foreignAddObj;

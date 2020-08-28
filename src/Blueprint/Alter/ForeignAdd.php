@@ -30,11 +30,11 @@ class ForeignAdd
     /**
      * Foreign constructor.
      * @param string|null $foreignName
-     * @param string $localColumn
+     * @param string|array $localColumn
      * @param string $relatedTableName
-     * @param string $foreignColumn
+     * @param string|array $foreignColumn
      */
-    public function __construct(?string $foreignName, string $localColumn, string $relatedTableName, string $foreignColumn)
+    public function __construct(?string $foreignName, $localColumn, string $relatedTableName, $foreignColumn)
     {
         $this->setForeignName($foreignName);
         $this->setLocalColumn($localColumn);
@@ -63,12 +63,12 @@ class ForeignAdd
 
     /**
      * 设置从表字段
-     * @param string $localColumn
+     * @param string|array $localColumn
      * @return ForeignAdd
      */
-    public function setLocalColumn(string $localColumn): ForeignAdd
+    public function setLocalColumn($localColumn): ForeignAdd
     {
-        $localColumn = trim($localColumn);
+        $localColumn = is_string($localColumn) ? trim($localColumn) : $localColumn;
         if (empty($localColumn)) {
             throw new InvalidArgumentException('The local column cannot be empty');
         }
@@ -109,16 +109,16 @@ class ForeignAdd
 
     /**
      * 设置主表字段
-     * @param string $foreignColumn
+     * @param string|array $foreignColumn
      * @return ForeignAdd
      */
-    public function setForeignColumn(string $foreignColumn): ForeignAdd
+    public function setForeignColumn($foreignColumn): ForeignAdd
     {
-        $foreignColumn = trim($foreignColumn);
+        $foreignColumn = is_string($foreignColumn) ? trim($foreignColumn) : $foreignColumn;
         if (empty($foreignColumn)) {
             throw new InvalidArgumentException('The foreign column cannot be empty');
         }
-        $this->foreignColumn = trim($foreignColumn);
+        $this->foreignColumn = $foreignColumn;
         return $this;
     }
 
@@ -179,6 +179,40 @@ class ForeignAdd
     }
 
     /**
+     * 组装主表字段名
+     * @return string
+     */
+    public function parseLocalColumns()
+    {
+        $columnDDLs   = [];
+        $localColumns = $this->getLocalColumn();
+        if (is_string($localColumns)) {
+            $localColumns = [$localColumns];
+        }
+        foreach ($localColumns as $localColumn) {
+            $columnDDLs[] = '`' . $localColumn . '`';
+        }
+        return '(' . implode(',', $columnDDLs) . ')';
+    }
+
+    /**
+     * 组装外键字段名
+     * @return string
+     */
+    public function parseForeignColumns()
+    {
+        $columnDDLs   = [];
+        $foreignColumns = $this->getForeignColumn();
+        if (is_string($foreignColumns)) {
+            $foreignColumns = [$foreignColumns];
+        }
+        foreach ($foreignColumns as $foreignColumn) {
+            $columnDDLs[] = '`' . $foreignColumn . '`';
+        }
+        return '(' . implode(',', $columnDDLs) . ')';
+    }
+
+    /**
      * 生成索引DDL结构
      * 带有下划线的方法请不要自行调用
      * @return string
@@ -190,8 +224,10 @@ class ForeignAdd
                 [
                     Alter::ADD,
                     $this->getForeignName() ? "CONSTRAINT `{$this->getForeignName()}`" : null,
-                    "FOREIGN KEY (`{$this->getLocalColumn()}`)",
-                    "REFERENCES `{$this->getRelatedTableName()}` (`{$this->getForeignColumn()}`)",
+                    "FOREIGN KEY",
+                    $this->parseLocalColumns(),
+                    "REFERENCES `{$this->getRelatedTableName()}`",
+                    $this->parseForeignColumns(),
                     $this->getOnDelete() ? "ON DELETE {$this->getOnDelete()}" : null,
                     $this->getOnUpdate() ? "ON UPDATE {$this->getOnUpdate()}" : null,
                 ]
