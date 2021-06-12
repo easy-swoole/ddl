@@ -341,6 +341,16 @@ class Table
         return $this->columns[$name];
     }
 
+    /**
+     * JSON对象 - JSON
+     * @param string $name 字段名称
+     * @return Column
+     */
+    public function json(string $name): Column
+    {
+        $this->columns[$name] = $this->createColumn($name, DataType::JSON);
+        return $this->columns[$name];
+    }
 
     // 以下为索引构造方法
 
@@ -633,7 +643,7 @@ class Table
                 $this->getTableComment() ? "COMMENT = '" . addslashes($this->getTableComment()) . "'" : null
             ]
         );
-        $ifNotExists  = $this->getIfNotExists() ? 'IF NOT EXISTS' : '';
+        $ifNotExists = $this->getIfNotExists() ? 'IF NOT EXISTS' : '';
         // 构建表格DDL
         $createDDL = implode(
                 "\n",

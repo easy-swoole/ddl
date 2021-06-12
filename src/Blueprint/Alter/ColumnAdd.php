@@ -3,6 +3,7 @@
 namespace EasySwoole\DDL\Blueprint\Alter;
 
 use EasySwoole\DDL\Blueprint\AbstractInterface\ColumnAbstract;
+use EasySwoole\DDL\Blueprint\Create\Column;
 use EasySwoole\DDL\Enum\Alter;
 use EasySwoole\DDL\Enum\DataType;
 use EasySwoole\DDL\Filter\FilterLimit;
@@ -278,6 +279,16 @@ class ColumnAdd extends ColumnAbstract
     }
 
     /**
+     * JSON对象 - JSON
+     * @param string $name 字段名称
+     * @return ColumnAdd
+     */
+    public function json(string $name): ColumnAdd
+    {
+        return $this->setColumnName($name)->setColumnType(DataType::JSON);
+    }
+
+    /**
      * 处理字段的默认值
      * @return bool|string
      */
@@ -329,7 +340,7 @@ class ColumnAdd extends ColumnAbstract
     private function parseDataType()
     {
         $columnLimit = $this->parseColumnLimit();
-        $columnType  = $this->columnType;
+        $columnType = $this->columnType;
         if ($columnLimit) {
             $columnType .= $columnLimit;
         }
@@ -347,7 +358,7 @@ class ColumnAdd extends ColumnAbstract
         FilterLimit::run($this);//检测limit是否合法
         FilterUnsigned::run($this); //检测无符号类型
         FilterZerofill::run($this); //检测是否补充长度
-        $default       = $this->parseDefaultValue();
+        $default = $this->parseDefaultValue();
         $columnCharset = $this->columnCharset ? explode('_', $this->columnCharset)[0] : false;
         return implode(' ',
             array_filter(

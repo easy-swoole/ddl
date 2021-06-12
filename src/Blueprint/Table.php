@@ -127,6 +127,11 @@ class Table extends CreateTable
         return $this->mediumblob($name);
     }
 
+    public function colJSON(string $name)
+    {
+        return $this->json($name);
+    }
+
     public function indexNormal(string $name, $columns)
     {
         return $this->normal($name, $columns);
