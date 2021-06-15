@@ -115,5 +115,4 @@ class Column extends ColumnAbstract
             )
         );
     }
-
 }

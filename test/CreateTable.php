@@ -2,7 +2,7 @@
 
 namespace EasySwoole\DDL\Test;
 
-require_once '../vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use EasySwoole\DDL\Blueprint\Create\Table as CreateTable;
 use EasySwoole\DDL\DDLBuilder;
@@ -19,6 +19,7 @@ $stuSql = DDLBuilder::create('student', function (CreateTable $table) {
     $table->varchar('stu_name', 30)->setColumnComment('学生姓名');
     $table->char('sex', 1)->setColumnComment('性别：1男，2女')->setDefaultValue(1);
     $table->int('age', 2)->setColumnComment('年龄')->setDefaultValue(0);
+    $table->json('info')->setColumnComment('其他信息');
     $table->date('birthday')->setIsNotNull(false)->setColumnComment('出生日期');
     $table->int('created_at', 10)->setColumnComment('创建时间');
     $table->int('updated_at', 10)->setColumnComment('更新时间');

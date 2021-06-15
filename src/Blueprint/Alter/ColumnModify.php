@@ -278,6 +278,16 @@ class ColumnModify extends ColumnAbstract
     }
 
     /**
+     * JSON对象 - JSON
+     * @param string $name 字段名称
+     * @return ColumnModify
+     */
+    public function json(string $name): ColumnModify
+    {
+        return $this->setColumnName($name)->setColumnType(DataType::JSON);
+    }
+
+    /**
      * 处理字段的默认值
      * @return bool|string
      */
@@ -329,7 +339,7 @@ class ColumnModify extends ColumnAbstract
     private function parseDataType()
     {
         $columnLimit = $this->parseColumnLimit();
-        $columnType  = $this->getColumnType();
+        $columnType = $this->getColumnType();
         if ($columnLimit) {
             $columnType .= $columnLimit;
         }
@@ -347,7 +357,7 @@ class ColumnModify extends ColumnAbstract
         FilterLimit::run($this);//检测limit是否合法
         FilterUnsigned::run($this); //检测无符号类型
         FilterZerofill::run($this); //检测是否补充长度
-        $default       = $this->parseDefaultValue();
+        $default = $this->parseDefaultValue();
         $columnCharset = $this->getColumnCharset() ? explode('_', $this->getColumnCharset())[0] : false;
         return implode(' ',
             array_filter(
