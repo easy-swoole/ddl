@@ -3,7 +3,7 @@
 namespace EasySwoole\DDL\Blueprint\Alter;
 
 use EasySwoole\DDL\Enum\Alter;
-use \EasySwoole\DDL\Enum\Foreign as ForeignType;
+use EasySwoole\DDL\Enum\Foreign as ForeignType;
 use InvalidArgumentException;
 
 /**

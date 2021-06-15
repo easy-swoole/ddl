@@ -2,7 +2,7 @@
 
 namespace EasySwoole\DDL\Blueprint\Create;
 
-use \EasySwoole\DDL\Enum\Foreign as ForeignType;
+use EasySwoole\DDL\Enum\Foreign as ForeignType;
 use InvalidArgumentException;
 
 /**

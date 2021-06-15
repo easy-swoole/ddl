@@ -13,6 +13,8 @@ $alterStuInfoSql = DDLBuilder::alter('student', function (AlterTable $table) {
     $table->dropIndex('ind_age');
     $table->modifyColumn()->varchar('stu_name', 50)->setColumnComment('学生姓名');
     $table->changeColumn('sex')->tinyint('gender', 1)->setDefaultValue('2')->setColumnComment('性别：1男，2未知');
+    $table->changeColumn("info")->json('ext_info')->setColumnComment('学生扩展信息');
+    $table->addColumn()->json('ext_other')->setColumnComment('其他扩展信息');
     $table->modifyIndex('ind_stu_name')->normal('ind_stu_name', 'stu_name')->setIndexComment('学生姓名--普通索引');
     $table->addColumn()->varchar('phone', 30)->setColumnComment('学生联系方式');
     $table->addIndex()->normal('ind_phone', 'phone')->setIndexComment('学生联系方式-普通索引');
@@ -37,7 +39,9 @@ ALTER TABLE `student_info`
 COMMENT = '学生信息表',
 DROP `age`,
 CHANGE `sex` `gender` tinyint(1) NOT NULL DEFAULT '2' COMMENT '性别：1男，2未知',
-MODIFY `stu_id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '学生ID',
+MODIFY `stu_name` varchar(50) NOT NULL COMMENT '学生姓名',
+CHANGE `info` `ext_info` json NOT NULL COMMENT '学生扩展信息',
+ADD `ext_other` json NOT NULL COMMENT '其他扩展信息',
 ADD `phone` varchar(30) NOT NULL COMMENT '学生联系方式',
 DROP INDEX `ind_age`,
 DROP INDEX `ind_stu_name`,
@@ -47,7 +51,6 @@ ADD INDEX `ind_phone` (`phone`) COMMENT '学生联系方式-普通索引';
 ALTER TABLE `score` RENAME TO `student_score`;
 ALTER TABLE `student_score`
 COMMENT = '学生成绩表',
-DROP INDEX `ind_score`,
 ADD INDEX `ind_score` (`score`) COMMENT '学生成绩--普通索引';
 ALTER TABLE `student_score` DROP FOREIGN KEY `fk_course_id`;
 ALTER TABLE `student_score` DROP FOREIGN KEY `fk_stu_id`;

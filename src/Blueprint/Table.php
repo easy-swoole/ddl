@@ -8,6 +8,7 @@ use EasySwoole\DDL\Blueprint\Create\Table as CreateTable;
  * 创建表结构描述
  * 暂只支持创建表 CREATE 结构
  * Class Table
+ * @deprecated 历史的创建方法，改用EasySwoole\DDL\Blueprint\Create\Table
  * @package EasySwoole\DDL\Blueprint
  */
 class Table extends CreateTable

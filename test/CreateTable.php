@@ -55,7 +55,7 @@ $scoreSql = DDLBuilder::create('score', function (CreateTable $table) {
     $table->foreign('fk_course_id', 'course_id', 'course', 'id')
         ->setOnDelete(Foreign::CASCADE)->setOnUpdate(Foreign::CASCADE);
 });
-echo $scoreSql;
+echo $scoreSql . PHP_EOL;
 
 //以下是输出sql语句
 /*
@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `stu_name` varchar(30) NOT NULL COMMENT '学生姓名',
   `sex` char(1) NOT NULL DEFAULT 1 COMMENT '性别：1男，2女',
   `age` int(2) NOT NULL DEFAULT 0 COMMENT '年龄',
+  `info` json NOT NULL COMMENT '其他信息',
   `birthday` date NULL DEFAULT NULL COMMENT '出生日期',
   `created_at` int(10) NOT NULL COMMENT '创建时间',
   `updated_at` int(10) NOT NULL COMMENT '更新时间',

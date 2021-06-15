@@ -23,7 +23,9 @@
     }
   },
   "require": {
-    "easyswoole/spl": "^1.2",
+    "easyswoole/spl": "^1.2"
+  },
+  "require-dev": {
     "easyswoole/phpunit": "^1.0"
   }
 }

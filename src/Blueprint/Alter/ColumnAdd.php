@@ -3,7 +3,6 @@
 namespace EasySwoole\DDL\Blueprint\Alter;
 
 use EasySwoole\DDL\Blueprint\AbstractInterface\ColumnAbstract;
-use EasySwoole\DDL\Blueprint\Create\Column;
 use EasySwoole\DDL\Enum\Alter;
 use EasySwoole\DDL\Enum\DataType;
 use EasySwoole\DDL\Filter\FilterLimit;
