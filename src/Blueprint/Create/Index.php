@@ -2,7 +2,7 @@
 
 namespace EasySwoole\DDL\Blueprint\Create;
 
-use \EasySwoole\DDL\Enum\Index as IndexType;
+use EasySwoole\DDL\Enum\Index as IndexType;
 use InvalidArgumentException;
 
 /**
