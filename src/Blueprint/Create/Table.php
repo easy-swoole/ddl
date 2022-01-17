@@ -42,6 +42,12 @@ class Table
 
     // 以下为字段构造方法
 
+    public function addColumn(Column $column):Table
+    {
+        $this->columns[$column->getColumnName()] = $column;
+        return $this;
+    }
+
     /**
      * 整数 int
      * @param string $name 字段名称
@@ -608,6 +614,16 @@ class Table
     protected function createForeignKey(?string $foreignName, $localColumn, string $relatedTableName, $foreignColumn)
     {
         return new Foreign($foreignName, $localColumn, $relatedTableName, $foreignColumn);
+    }
+
+    function getIndexs():array
+    {
+        return $this->indexes;
+    }
+
+    function foreignKeys():array
+    {
+        return $this->foreignKeys;
     }
 
     // 生成表结构 带有下划线的方法请不要自行调用
