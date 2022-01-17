@@ -48,6 +48,11 @@ class Table
         return $this;
     }
 
+    public function getColumns():array
+    {
+        return $this->columns;
+    }
+
     /**
      * 整数 int
      * @param string $name 字段名称
