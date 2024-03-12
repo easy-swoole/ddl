@@ -56,7 +56,7 @@ class ColumnDrop
         return implode(' ',
             array_filter(
                 [
-                    Alter::DROP,
+                    Alter::DROP->name,
                     '`' . $this->getColumnName() . '`',
                 ]
             )

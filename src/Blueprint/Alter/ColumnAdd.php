@@ -339,7 +339,7 @@ class ColumnAdd extends ColumnAbstract
     private function parseDataType()
     {
         $columnLimit = $this->parseColumnLimit();
-        $columnType = $this->columnType;
+        $columnType = $this->columnType->value;
         if ($columnLimit) {
             $columnType .= $columnLimit;
         }
@@ -362,7 +362,7 @@ class ColumnAdd extends ColumnAbstract
         return implode(' ',
             array_filter(
                 [
-                    Alter::ADD,
+                    Alter::ADD->name,
                     '`' . $this->columnName . '`',
                     (string)$this->parseDataType(),
                     $this->isBinary ? 'BINARY' : null,

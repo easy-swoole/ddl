@@ -4,13 +4,13 @@ namespace EasySwoole\DDL\Enum;
 
 /**
  * Alter操作选项
- * Class Foreign
+ * Class Alter
  * @package EasySwoole\DDL\Enum
  */
-class Alter
+enum Alter
 {
-    const ADD = 'ADD';
-    const MODIFY = 'MODIFY';
-    const CHANGE = 'CHANGE';
-    const DROP = 'DROP';
+    case ADD;
+    case MODIFY;
+    case CHANGE;
+    case DROP;
 }

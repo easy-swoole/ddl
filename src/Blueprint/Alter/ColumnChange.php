@@ -363,7 +363,7 @@ class ColumnChange extends ColumnAbstract
     private function parseDataType()
     {
         $columnLimit = $this->parseColumnLimit();
-        $columnType = $this->columnType;
+        $columnType = $this->columnType->value;
         if ($columnLimit) {
             $columnType .= $columnLimit;
         }
@@ -385,7 +385,7 @@ class ColumnChange extends ColumnAbstract
         return implode(' ',
             array_filter(
                 [
-                    Alter::CHANGE,
+                    Alter::CHANGE->name,
                     '`' . $this->oldColumnName . '`',
                     '`' . $this->columnName . '`',
                     (string)$this->parseDataType(),

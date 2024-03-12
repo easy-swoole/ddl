@@ -53,7 +53,7 @@ class Table
      */
     public function addColumn(): ColumnAdd
     {
-        $this->columns[Alter::ADD][] = $columnAdd = new ColumnAdd();
+        $this->columns[Alter::ADD->name][] = $columnAdd = new ColumnAdd();
         return $columnAdd;
     }
 
@@ -63,7 +63,7 @@ class Table
      */
     public function modifyColumn(): ColumnModify
     {
-        $this->columns[Alter::MODIFY][] = $columnModify = new ColumnModify();
+        $this->columns[Alter::MODIFY->name][] = $columnModify = new ColumnModify();
         return $columnModify;
     }
 
@@ -74,7 +74,7 @@ class Table
      */
     public function changeColumn(string $column): ColumnChange
     {
-        $this->columns[Alter::CHANGE][] = $columnChange = new ColumnChange($column);
+        $this->columns[Alter::CHANGE->name][] = $columnChange = new ColumnChange($column);
         return $columnChange;
     }
 
@@ -85,7 +85,7 @@ class Table
      */
     public function dropColumn(string $column): ColumnDrop
     {
-        $this->columns[Alter::DROP][] = $columnDrop = new ColumnDrop($column);
+        $this->columns[Alter::DROP->name][] = $columnDrop = new ColumnDrop($column);
         return $columnDrop;
     }
 
@@ -97,7 +97,7 @@ class Table
      */
     public function addIndex()
     {
-        $this->indexes[Alter::ADD][] = $indexAdd = new IndexAdd();
+        $this->indexes[Alter::ADD->name][] = $indexAdd = new IndexAdd();
         return $indexAdd;
     }
 
@@ -108,8 +108,8 @@ class Table
      */
     public function modifyIndex(string $indexName)
     {
-        $this->indexes[Alter::DROP][] = new IndexDrop($indexName);
-        $this->indexes[Alter::ADD][]  = $indexModify = new IndexAdd();
+        $this->indexes[Alter::DROP->name][] = new IndexDrop($indexName);
+        $this->indexes[Alter::ADD->name][]  = $indexModify = new IndexAdd();
         return $indexModify;
     }
 
@@ -120,7 +120,7 @@ class Table
      */
     public function dropIndex(string $indexName)
     {
-        $this->indexes[Alter::DROP][] = $indexDrop = new IndexDrop($indexName);
+        $this->indexes[Alter::DROP->name][] = $indexDrop = new IndexDrop($indexName);
         return $indexDrop;
     }
 
@@ -136,7 +136,7 @@ class Table
      */
     public function addForeign(?string $foreignName, $localColumn, string $relatedTableName, $foreignColumn)
     {
-        $this->foreignKeys[Alter::ADD][] = $foreignAdd = new ForeignAdd($foreignName, $localColumn, $relatedTableName, $foreignColumn);
+        $this->foreignKeys[Alter::ADD->name][] = $foreignAdd = new ForeignAdd($foreignName, $localColumn, $relatedTableName, $foreignColumn);
         return $foreignAdd;
     }
 
@@ -147,8 +147,8 @@ class Table
      */
     public function modifyForeign(string $indexName)
     {
-        $this->foreignKeys[Alter::DROP][] = new ForeignDrop($indexName);
-        $this->foreignKeys[Alter::ADD][]  = $foreignAdd = new ForeignModify();
+        $this->foreignKeys[Alter::DROP->name][] = new ForeignDrop($indexName);
+        $this->foreignKeys[Alter::ADD->name][]  = $foreignAdd = new ForeignModify();
         return $foreignAdd;
     }
 
@@ -159,7 +159,7 @@ class Table
      */
     public function dropForeign(string $indexName)
     {
-        $this->foreignKeys[Alter::DROP][] = $foreignDrop = new ForeignDrop($indexName);
+        $this->foreignKeys[Alter::DROP->name][] = $foreignDrop = new ForeignDrop($indexName);
         return $foreignDrop;
     }
 
@@ -307,10 +307,10 @@ class Table
         }
         //避免一些先新增，后删除的操作报错
         return $columnDefinitions = array_merge(
-            isset($tmpColumnDefinitions[Alter::DROP]) ? array_values((array)$tmpColumnDefinitions[Alter::DROP]) : [],
-            isset($tmpColumnDefinitions[Alter::CHANGE]) ? array_values((array)$tmpColumnDefinitions[Alter::CHANGE]) : [],
-            isset($tmpColumnDefinitions[Alter::MODIFY]) ? array_values((array)$tmpColumnDefinitions[Alter::MODIFY]) : [],
-            isset($tmpColumnDefinitions[Alter::ADD]) ? array_values((array)$tmpColumnDefinitions[Alter::ADD]) : []
+            isset($tmpColumnDefinitions[Alter::DROP->name]) ? array_values((array)$tmpColumnDefinitions[Alter::DROP->name]) : [],
+            isset($tmpColumnDefinitions[Alter::CHANGE->name]) ? array_values((array)$tmpColumnDefinitions[Alter::CHANGE->name]) : [],
+            isset($tmpColumnDefinitions[Alter::MODIFY->name]) ? array_values((array)$tmpColumnDefinitions[Alter::MODIFY->name]) : [],
+            isset($tmpColumnDefinitions[Alter::ADD->name]) ? array_values((array)$tmpColumnDefinitions[Alter::ADD->name]) : []
         );
     }
 
@@ -329,8 +329,8 @@ class Table
         }
         //避免一些先新增，后删除的操作报错
         return $indexDefinitions = array_merge(
-            isset($tmpIndexDefinitions[Alter::DROP]) ? array_values((array)$tmpIndexDefinitions[Alter::DROP]) : [],
-            isset($tmpIndexDefinitions[Alter::ADD]) ? array_values((array)$tmpIndexDefinitions[Alter::ADD]) : []
+            isset($tmpIndexDefinitions[Alter::DROP->name]) ? array_values((array)$tmpIndexDefinitions[Alter::DROP->name]) : [],
+            isset($tmpIndexDefinitions[Alter::ADD->name]) ? array_values((array)$tmpIndexDefinitions[Alter::ADD->name]) : []
         );
     }
 
@@ -350,8 +350,8 @@ class Table
         }
         //避免一些先新增，后删除的操作报错
         return $foreignDefinitions = array_merge(
-            isset($tmpForeignDefinitions[Alter::DROP]) ? array_values((array)$tmpForeignDefinitions[Alter::DROP]) : [],
-            isset($tmpForeignDefinitions[Alter::ADD]) ? array_values((array)$tmpForeignDefinitions[Alter::ADD]) : []
+            isset($tmpForeignDefinitions[Alter::DROP->name]) ? array_values((array)$tmpForeignDefinitions[Alter::DROP->name]) : [],
+            isset($tmpForeignDefinitions[Alter::ADD->name]) ? array_values((array)$tmpForeignDefinitions[Alter::ADD->name]) : []
         );
     }
 

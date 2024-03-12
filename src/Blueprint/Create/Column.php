@@ -3,6 +3,7 @@
 namespace EasySwoole\DDL\Blueprint\Create;
 
 use EasySwoole\DDL\Blueprint\AbstractInterface\ColumnAbstract;
+use EasySwoole\DDL\Enum\DataType;
 use EasySwoole\DDL\Filter\FilterLimit;
 use EasySwoole\DDL\Filter\FilterUnsigned;
 use EasySwoole\DDL\Filter\FilterZerofill;
@@ -19,7 +20,7 @@ class Column extends ColumnAbstract
      * @param string $columnName 列的名称
      * @param string $columnType 列的类型
      */
-    public function __construct(string $columnName, string $columnType)
+    public function __construct(string $columnName, DataType $columnType)
     {
         $this->setColumnName($columnName);
         $this->setColumnType($columnType);

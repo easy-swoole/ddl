@@ -57,7 +57,7 @@ class ForeignDrop
         return implode(' ',
             array_filter(
                 [
-                    Alter::DROP . ' FOREIGN KEY',
+                    Alter::DROP->name . ' FOREIGN KEY',
                     '`' . $this->getForeignName() . '`',
                 ]
             )

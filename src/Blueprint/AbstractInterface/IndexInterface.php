@@ -2,9 +2,12 @@
 
 namespace EasySwoole\DDL\Blueprint\AbstractInterface;
 
+use EasySwoole\DDL\Enum\Index as IndexType;
+
 /**
  * 索引构造器接口类
  * Class IndexInterface
+ *
  * @package EasySwoole\DDL\Blueprint\AbstractInterface
  */
 interface IndexInterface
@@ -23,10 +26,10 @@ interface IndexInterface
 
     /**
      * 设置索引类型
-     * @param string $type
+     * @param IndexType $type
      * @return IndexInterface
      */
-    public function setIndexType(string $type);
+    public function setIndexType(IndexType $type);
 
     /**
      * @return mixed

@@ -20,7 +20,7 @@ class Index
     /**
      * Index constructor.
      * @param string|null $indexName 不设置索引名可以传入NULL
-     * @param string $indexType 传入类型常量
+     * @param IndexType $indexType 传入类型常量
      * @param string|array $indexColumns 传入索引字段
      */
     public function __construct(?string $indexName, $indexType, $indexColumns)
@@ -55,9 +55,8 @@ class Index
      * @param string $type
      * @return Index
      */
-    public function setIndexType(string $type): Index
+    public function setIndexType(IndexType $type): Index
     {
-        $type = trim($type);
         if (!IndexType::isValidValue($type)) {
             throw new InvalidArgumentException('The index type ' . $type . ' is invalid');
         }
@@ -70,7 +69,7 @@ class Index
      */
     public function getIndexType()
     {
-        return $this->indexType;
+        return $this->indexType->value;
     }
 
     /**
@@ -136,10 +135,10 @@ class Index
     public function __createDDL()
     {
         $indexPrefix = [
-            IndexType::NORMAL   => 'INDEX',
-            IndexType::UNIQUE   => 'UNIQUE INDEX',
-            IndexType::PRIMARY  => 'PRIMARY KEY',
-            IndexType::FULLTEXT => 'FULLTEXT INDEX',
+            IndexType::NORMAL->value   => 'INDEX',
+            IndexType::UNIQUE->value   => 'UNIQUE INDEX',
+            IndexType::PRIMARY->value  => 'PRIMARY KEY',
+            IndexType::FULLTEXT->value => 'FULLTEXT INDEX',
         ];
         return implode(' ',
             array_filter(

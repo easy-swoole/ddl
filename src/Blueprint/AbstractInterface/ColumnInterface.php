@@ -2,9 +2,12 @@
 
 namespace EasySwoole\DDL\Blueprint\AbstractInterface;
 
+use EasySwoole\DDL\Enum\DataType;
+
 /**
  * 字段构造器接口类
  * Class ColumnInterface
+ *
  * @package EasySwoole\DDL\Blueprint\AbstractInterface
  */
 interface ColumnInterface
@@ -23,10 +26,10 @@ interface ColumnInterface
 
     /**
      * 设置字段类型
-     * @param string $type
+     * @param DataType $type
      * @return ColumnInterface
      */
-    public function setColumnType(string $type);
+    public function setColumnType(DataType $type);
 
     /**
      * @return mixed

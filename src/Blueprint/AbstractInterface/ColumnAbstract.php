@@ -51,25 +51,24 @@ abstract class ColumnAbstract implements ColumnInterface
 
     /**
      * 设置字段类型
-     * @param string $type
+     * @param DataType $type
      * @return ColumnAbstract
      */
-    public function setColumnType(string $type)
+    public function setColumnType(DataType $type)
     {
-        $type = trim($type);
         if (!DataType::isValidValue($type)) {
-            throw new InvalidArgumentException('The column type ' . $type . ' is invalid');
+            throw new InvalidArgumentException('The column type ' . $type->value . ' is invalid');
         }
         $this->columnType = $type;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getColumnType()
     {
-        return $this->columnType;
+        return $this->columnType->value;
     }
 
     /**
