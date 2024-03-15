@@ -4,6 +4,7 @@ namespace EasySwoole\DDL\Blueprint\Create;
 
 use EasySwoole\DDL\Enum\Character;
 use EasySwoole\DDL\Enum\DataType;
+use EasySwoole\DDL\Enum\Engine;
 use EasySwoole\DDL\Enum\Engine as Engines;
 use EasySwoole\DDL\Enum\Index as IndexType;
 
@@ -500,12 +501,11 @@ class Table
 
     /**
      * 设置储存引擎
-     * @param string $engine
+     * @param Engine $engine
      * @return Table
      */
-    public function setTableEngine(string $engine): Table
+    public function setTableEngine(Engine $engine): Table
     {
-        $engine = trim($engine);
         if (!Engines::isValidValue($engine)) {
             throw new \InvalidArgumentException('The engine ' . $engine . ' is invalid');
         }
@@ -518,7 +518,7 @@ class Table
      */
     public function getTableEngine()
     {
-        return $this->engine;
+        return $this->engine->value;
     }
 
     /**
@@ -542,14 +542,13 @@ class Table
 
     /**
      * 设置表字符集
-     * @param string $charset
+     * @param Character $charset
      * @return Table
      */
-    public function setTableCharset(string $charset): Table
+    public function setTableCharset(Character $charset): Table
     {
-        $charset = trim($charset);
         if (!Character::isValidValue($charset)) {
-            throw new \InvalidArgumentException('The character ' . $charset . ' is invalid');
+            throw new \InvalidArgumentException('The character ' . $charset->value . ' is invalid');
         }
         $this->charset = $charset;
         return $this;
@@ -560,7 +559,7 @@ class Table
      */
     public function getTableCharset()
     {
-        return $this->charset;
+        return $this->charset->value;
     }
 
     /**
@@ -586,10 +585,10 @@ class Table
      * 创建一个列对象
      * 继承可以改变返回的类对象以使用自定义对象
      * @param string $columnName
-     * @param string $columnType
+     * @param DataType $columnType
      * @return Column
      */
-    protected function createColumn(string $columnName, string $columnType)
+    protected function createColumn(string $columnName, DataType $columnType)
     {
         return new Column($columnName, $columnType);
     }

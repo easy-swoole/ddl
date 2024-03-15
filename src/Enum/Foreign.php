@@ -7,10 +7,10 @@ namespace EasySwoole\DDL\Enum;
  * Class Foreign
  * @package EasySwoole\DDL\Enum
  */
-class Foreign
+enum Foreign :string
 {
-    const CASCADE = 'CASCADE';
-    const NO_ACTION = 'NO ACTION';
-    const RESTRICT = 'RESTRICT';
-    const SET_NULL = 'SET NULL';
+    case CASCADE = 'CASCADE';
+    case NO_ACTION = 'NO ACTION';
+    case RESTRICT = 'RESTRICT';
+    case SET_NULL = 'SET NULL';
 }

@@ -132,15 +132,15 @@ class Foreign
     /**
      * 主表删除操作从表动作
      * \EasySwoole\DDL\Enum\Foreign
-     * @param string $option
+     * @param ForeignType $option
      * @return Foreign
      */
-    public function setOnDelete(string $option)
+    public function setOnDelete(ForeignType $option)
     {
-        $option = trim($option);
         if (!in_array($option, $this->ForeignOption)) {
             throw new InvalidArgumentException('on delete option is invalid');
         }
+
         $this->onDelete = $option;
         return $this;
     }
@@ -150,18 +150,17 @@ class Foreign
      */
     public function getOnDelete()
     {
-        return $this->onDelete;
+        return $this->onDelete->value;
     }
 
     /**
      * 主表更新操作从表动作
      * \EasySwoole\DDL\Enum\Foreign
-     * @param string $option
+     * @param ForeignType $option
      * @return Foreign
      */
-    public function setOnUpdate(string $option)
+    public function setOnUpdate(ForeignType $option)
     {
-        $option = trim($option);
         if (!in_array($option, $this->ForeignOption)) {
             throw new InvalidArgumentException('on update option is invalid');
         }
@@ -174,7 +173,7 @@ class Foreign
      */
     public function getOnUpdate()
     {
-        return $this->onUpdate;
+        return $this->onUpdate->value;
     }
 
     /**

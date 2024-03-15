@@ -222,7 +222,7 @@ class ForeignAdd
         return implode(' ',
             array_filter(
                 [
-                    Alter::ADD,
+                    Alter::ADD->name,
                     $this->getForeignName() ? "CONSTRAINT `{$this->getForeignName()}`" : null,
                     "FOREIGN KEY",
                     $this->parseLocalColumns(),

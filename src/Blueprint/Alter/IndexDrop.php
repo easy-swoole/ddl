@@ -57,7 +57,7 @@ class IndexDrop
         return implode(' ',
             array_filter(
                 [
-                    Alter::DROP . ' INDEX',
+                    Alter::DROP->name . ' INDEX',
                     '`' . $this->getIndexName() . '`',
                 ]
             )

@@ -2,6 +2,7 @@
 
 namespace EasySwoole\DDL\Blueprint\AbstractInterface;
 
+use EasySwoole\DDL\Enum\Index;
 use EasySwoole\DDL\Enum\Index as IndexType;
 use InvalidArgumentException;
 
@@ -39,12 +40,11 @@ abstract class IndexAbstract implements IndexInterface
 
     /**
      * 设置索引类型
-     * @param string $type
+     * @param IndexType $type
      * @return IndexAbstract
      */
-    public function setIndexType(string $type)
+    public function setIndexType(IndexType $type)
     {
-        $type = trim($type);
         if (!IndexType::isValidValue($type)) {
             throw new InvalidArgumentException('The index type ' . $type . ' is invalid');
         }
@@ -57,7 +57,7 @@ abstract class IndexAbstract implements IndexInterface
      */
     public function getIndexType()
     {
-        return $this->indexType;
+        return $this->indexType->value;
     }
 
     /**
@@ -111,5 +111,10 @@ abstract class IndexAbstract implements IndexInterface
     public function __toString()
     {
         return $this->__createDDL();
+    }
+
+    public static function isValidValue()
+    {
+
     }
 }

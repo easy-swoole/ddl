@@ -2,80 +2,87 @@
 
 namespace EasySwoole\DDL\Enum;
 
-use EasySwoole\Spl\SplEnum;
-
 /**
  * 字段类型枚举
  * Class DataType
  * @package EasySwoole\DDL\Enum
  */
-class DataType extends SplEnum
+enum DataType: string
 {
     // 整型
-    const INT = 'int';
-    const INTEGER = 'integer';
-    const BIGINT = 'bigint';
-    const TINYINT = 'tinyint';
-    const SMALLINT = 'smallint';
-    const MEDIUMINT = 'mediumint';
+    case INT = 'int';
+    case INTEGER = 'integer';
+    case BIGINT = 'bigint';
+    case TINYINT = 'tinyint';
+    case SMALLINT = 'smallint';
+    case MEDIUMINT = 'mediumint';
 
     // 小数 前面的要大于后面的
-    const FLOAT = 'float';
-    const DOUBLE = 'double';
-    const DECIMAL = 'decimal';
+    case FLOAT = 'float';
+    case DOUBLE = 'double';
+    case DECIMAL = 'decimal';
 
     // 时间
-    const DATE = 'date';
-    const TIME = 'time';
-    const YEAR = 'year';
-    const DATETIME = 'datetime';
-    const TIMESTAMP = 'timestamp';
+    case DATE = 'date';
+    case TIME = 'time';
+    case YEAR = 'year';
+    case DATETIME = 'datetime';
+    case TIMESTAMP = 'timestamp';
 
     // 字符
-    const CHAR = 'char';
-    const TEXT = 'text';
-    const VARCHAR = 'varchar';
-    const TINYTEXT = 'tinytext';
-    const MEDIUMTEXT = 'mediumtext';
-    const LONGTEXT = 'longtext';
+    case CHAR = 'char';
+    case TEXT = 'text';
+    case VARCHAR = 'varchar';
+    case TINYTEXT = 'tinytext';
+    case MEDIUMTEXT = 'mediumtext';
+    case LONGTEXT = 'longtext';
 
     // 二进制大对象
-    const BLOB = 'blob';
-    const TINYBLOB = 'tinyblob';
-    const MEDIUMBLOB = 'mediumblob';
-    const LONGBLOB = 'longblob';
+    case BLOB = 'blob';
+    case TINYBLOB = 'tinyblob';
+    case MEDIUMBLOB = 'mediumblob';
+    case LONGBLOB = 'longblob';
 
-    const BINARY = 'binary';
+    case BINARY = 'binary';
 
-    const VARBINARY = 'varbinary';
+    case VARBINARY = 'varbinary';
 
-    const JSON = 'json';
+    case JSON = 'json';
 
-    const BIT = 'bit';
+    case BIT = 'bit';
 
-    const ENUM = 'enum';
+    case ENUM = 'enum';
 
-    const GEOMETRY = 'geometry';
+    case GEOMETRY = 'geometry';
 
-    const GEOMETRYCOLLECTION = 'geometrycollection';
+    case GEOMETRYCOLLECTION = 'geometrycollection';
 
-    const LINESTRING = 'linestring';
+    case LINESTRING = 'linestring';
 
-    const MULTILINESTRING = 'multilinestring';
+    case MULTILINESTRING = 'multilinestring';
 
-    const MULTIPOINT = 'multipoint';
+    case MULTIPOINT = 'multipoint';
 
-    const MULTIPOLYGON = 'multipolygon';
+    case MULTIPOLYGON = 'multipolygon';
 
-    const NUMERIC = 'numeric';
+    case NUMERIC = 'numeric';
 
-    const POINT = 'point';
+    case POINT = 'point';
 
-    const POLYGON = 'polygon';
+    case POLYGON = 'polygon';
 
-    const REAL = 'real';
+    case REAL = 'real';
 
-    const SET = 'set';
+    case SET = 'set';
+
+    private static function getEnums(): array
+    {
+        try {
+            return (new \ReflectionClass(static::class))->getConstants();
+        } catch (\Throwable $throwable) {
+            return [];
+        }
+    }
 
     /**
      * 是否数字类型
@@ -86,16 +93,17 @@ class DataType extends SplEnum
     {
         // 全部数字类型
         $numericTypes = [
-            DataType::INT,
-            DataType::INTEGER,
-            DataType::BIGINT,
-            DataType::TINYINT,
-            DataType::SMALLINT,
-            DataType::MEDIUMINT,
-            DataType::FLOAT,
-            DataType::DOUBLE,
-            DataType::DECIMAL
+            DataType::INT->value,
+            DataType::INTEGER->value,
+            DataType::BIGINT->value,
+            DataType::TINYINT->value,
+            DataType::SMALLINT->value,
+            DataType::MEDIUMINT->value,
+            DataType::FLOAT->value,
+            DataType::DOUBLE->value,
+            DataType::DECIMAL->value,
         ];
+
         return in_array($type, $numericTypes);
     }
 
@@ -108,13 +116,14 @@ class DataType extends SplEnum
     {
         // 全部文本类型
         $textualType = [
-            DataType::CHAR,
-            DataType::TEXT,
-            DataType::VARCHAR,
-            DataType::TINYTEXT,
-            DataType::LONGTEXT,
-            DataType::MEDIUMTEXT
+            DataType::CHAR->value,
+            DataType::TEXT->value,
+            DataType::VARCHAR->value,
+            DataType::TINYTEXT->value,
+            DataType::LONGTEXT->value,
+            DataType::MEDIUMTEXT->value,
         ];
+
         return in_array($type, $textualType);
     }
 
@@ -127,11 +136,12 @@ class DataType extends SplEnum
     {
         // 全部二进制类型
         $binaryType = [
-            DataType::BLOB,
-            DataType::TINYBLOB,
-            DataType::LONGBLOB,
-            DataType::MEDIUMBLOB
+            DataType::BLOB->value,
+            DataType::TINYBLOB->value,
+            DataType::LONGBLOB->value,
+            DataType::MEDIUMBLOB->value,
         ];
+
         return in_array($type, $binaryType);
     }
 
@@ -144,12 +154,18 @@ class DataType extends SplEnum
     {
         // 全部时间日期类型
         $datetimeType = [
-            DataType::DATE,
-            DataType::TIME,
-            DataType::YEAR,
-            DataType::DATETIME,
-            DataType::TIMESTAMP,
+            DataType::DATE->value,
+            DataType::TIME->value,
+            DataType::YEAR->value,
+            DataType::DATETIME->value,
+            DataType::TIMESTAMP->value,
         ];
+
         return in_array(strtolower($type), $datetimeType);
+    }
+
+    public static function isValidValue($val)
+    {
+        return $val instanceof DataType;
     }
 }

@@ -9,10 +9,15 @@ use EasySwoole\Spl\SplEnum;
  * Class Index
  * @package EasySwoole\DDL\Enum
  */
-class Index extends SplEnum
+enum Index: string
 {
-    const NORMAL = 'normal';
-    const UNIQUE = 'unique';
-    const PRIMARY = 'primary';
-    const FULLTEXT = 'fulltext';
+    case NORMAL = 'normal';
+    case UNIQUE = 'unique';
+    case PRIMARY = 'primary';
+    case FULLTEXT = 'fulltext';
+
+    public static function isValidValue($val)
+    {
+        return $val instanceof Index;
+    }
 }

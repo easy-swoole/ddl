@@ -97,15 +97,15 @@ class IndexAdd extends IndexAbstract
     public function __createDDL()
     {
         $indexPrefix = [
-            IndexType::NORMAL   => 'INDEX',
-            IndexType::UNIQUE   => 'UNIQUE INDEX',
-            IndexType::PRIMARY  => 'PRIMARY KEY',
-            IndexType::FULLTEXT => 'FULLTEXT INDEX',
+            IndexType::NORMAL->value   => 'INDEX',
+            IndexType::UNIQUE->value   => 'UNIQUE INDEX',
+            IndexType::PRIMARY->value  => 'PRIMARY KEY',
+            IndexType::FULLTEXT->value => 'FULLTEXT INDEX',
         ];
         return implode(' ',
             array_filter(
                 [
-                    Alter::ADD,
+                    Alter::ADD->name,
                     $indexPrefix[$this->getIndexType()],
                     $this->getIndexName() !== null ? '`' . $this->getIndexName() . '`' : null,
                     $this->parseIndexColumns(),

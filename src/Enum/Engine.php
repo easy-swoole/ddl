@@ -2,22 +2,25 @@
 
 namespace EasySwoole\DDL\Enum;
 
-use EasySwoole\Spl\SplEnum;
-
 /**
  * 储存引擎类型枚举
  * Class Engine
  * @package EasySwoole\DDL\Enum
  */
-class Engine extends SplEnum
+enum Engine :string
 {
-    const CSV = 'csv';
-    const INNODB = 'innodb';
-    const MEMORY = 'memory';
-    const MYISAM = 'myisam';
-    const ARCHIVE = 'archive';
-    const FEDERATED = 'federated';
-    const BLACKHOLE = 'blackhole';
-    const MRG_MYISAM = 'mrg_myisam';
-    const PERFORMANCE_SCHEMA = 'performance_schema';
+    case CSV = 'csv';
+    case INNODB = 'innodb';
+    case MEMORY = 'memory';
+    case MYISAM = 'myisam';
+    case ARCHIVE = 'archive';
+    case FEDERATED = 'federated';
+    case BLACKHOLE = 'blackhole';
+    case MRG_MYISAM = 'mrg_myisam';
+    case PERFORMANCE_SCHEMA = 'performance_schema';
+
+    public static function isValidValue($val)
+    {
+        return $val instanceof Engine;
+    }
 }
